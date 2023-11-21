@@ -1,0 +1,177 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Contributing}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+	\frametitle{Outline}
+	\begin{columns}[t]
+		\begin{column}{.5\textwidth}
+			\tableofcontents[sections={1-9},currentsection]
+		\end{column}
+		\begin{column}{.5\textwidth}
+			\tableofcontents[sections={10-18},currentsection]
+		\end{column}
+	\end{columns}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+	\frametitle{What is this about?}
+	\begin{question}[Questions]
+		\begin{itemize}
+			\item How do I report Issues?
+			\item How do I improve the Documentation?
+		\end{itemize}
+	\end{question}
+	\begin{docs}[Objectives]
+		\begin{enumerate}
+			\item Getting to know \texttt{GitHub}.
+			\item Learn how to figure out where an error comes from.
+			\item Learning how to create a \emph{meaningful} issue report.
+		\end{enumerate}
+	\end{docs}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{"I am not a Programmer!"}
+  \ldots and do not know what and how to contribute!
+  \pause
+  \begin{block}{Open Source is \emph{NOT JUST} about Programming}
+  	\lhref{https://opensource.guide/how-to-contribute/}{You can}
+  	\begin{itemize}[<+->]
+  		\item contribute by writing whats wrong (issue reports)
+  		\item contribute by writing how it's done (documentation)
+  		\item contribute by organizing events (bringing people together)
+  		\item contribute by checking (test the code submissions of other's)
+  		\item etc. etc. etc.
+  	\end{itemize}
+  \end{block} 
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The Multitute of Issues}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Is it \texttt{Snakemake}, the Workflow or the Cluster?}
+  	\begin{columns}[t]
+  	\begin{column}{.5\textwidth}
+  	  A workflow may break for a number of reasons:
+  	  \begin{enumerate}
+  	  	\item a program breaks
+  	  	\item the workflow has an issue
+  	  	\item a computer failure
+  	  	\item a program version change breaks the workflow
+  	  	\item some computer issue (e.\,g. disk failure) breaks the workflow
+  	  \end{enumerate}
+  	\end{column}
+  	\begin{column}{.5\textwidth}
+  	  \tikzset{
+  	  	LabelStyle/.style = { rectangle, rounded corners, draw,
+  	  		minimum width = 2em, fill = yellow!50,
+  	  		text = red, font = \bfseries },
+  	  	VertexStyle/.append style = { inner sep=5pt,
+  	  		font = \Large\bfseries},
+  	  	EdgeStyle/.append style = {->, bend left} }
+    	\resizebox{\columnwidth}{!}{
+  	   \begin{tikzpicture}
+  	   	\GraphInit[vstyle = Shade]
+  	   	\SetGraphUnit{5}
+  	   	\Vertex{Issue}
+  	   	\SOWE(Issue){Workflow}
+  	   	\SO(Issue){Program}
+  	   	\SOEA(Issue){Computer}
+  	   	
+  	   	
+  	   	\Edge[label = 1, style={->}](Issue)(Program)
+  	   	\Edge[label = 2, style={->,bend right}](Issue)(Workflow)
+  	   	\Edge[label = 3, style={->,bend left}](Issue)(Computer)
+  	   	%\Edge[label = 4](Issue)(Computer)
+  	   	%\Loop[dist = 4cm, dir = NO, label = 5](Computer.west)
+  	   	%\Loop[dist = 4cm, dir = SO, label = 6](Program.east)
+  	   	%\tikzset{EdgeStyle/.append style = {bend left = 50}}
+  	   	\Edge[label = 4,style={<-,bend left}](Workflow)(Program)
+  	   	\Edge[label = 5,style={<-,bend left}](Computer)(Workflow)
+  	   	%\Loop[dist = 4cm, dir = SOWE, label = 6](Program.west)
+  	   \end{tikzpicture}}
+  	\end{column}
+  \end{columns}
+  \pause
+  \begin{hint}
+  	It is important to figure out the underlying issue before reporting anything!
+  \end{hint}	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Do I need a \texttt{GitHub} account?}
+  It may change, but today many software projects are either hosted on some institutional \texttt{GitLab} or the global git server of Microsoft, \texttt{GitHub}.\newline
+  If you want to report an issue or even contribute back to the project with anything else, you will need an account. \lhref{This page}{https://docs.github.com/en/get-started/onboarding/getting-started-with-your-github-account} describe how. 
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+	\frametitle{Reporting Cluster Issues}
+	\begin{question}[Where to?]
+	  Report them to your cluster admins (chat, mail ticket, etc.)
+	\end{question}
+    \pause
+    \begin{question}[What?]
+      Inaccessible paths (file system issue), network issues, node failures, etc. 
+    \end{question}
+    \pause
+    \begin{question}[How?]
+      Give a meaningful brief statement. "I cannot to \altverb{ls} on \altverb{/some/path}." is more meaningful than "The filesystem stopped working!" and "For me too!" messages.\newline
+      \bcattention Check your mails! Has some maintenance been scheduled?
+    \end{question}	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+	\frametitle{Reporting Application Issues}
+	\begin{question}[Where to?]
+		The issue tracker of your application (if any). 
+	\end{question}
+	\pause
+	\begin{question}[What?]
+		Any application specific error. Try running the application with the input and parameters specified in the workflow (get them with \altverb{snakemake -p} to print the shell command or other debug flags). If the application breaks, report the failure. Else, it might be the workflow.
+	\end{question}
+	\pause
+	\begin{question}[How?]
+		Indicate the error message and what is leading to it. If you need special input to reproduce the issue, upload the input somewhere or attach minimal input to the issue report.
+	\end{question}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+	\frametitle{Reporting Workflow Issues}
+	\begin{question}[Where to?]
+		The issue tracker at your workflow. For \texttt{Snakemake} somewhere in the \lhref{https://snakemake.github.io/snakemake-workflow-catalog/}{catalog}. 
+	\end{question}
+	\pause
+	\begin{question}[What?]
+	   Check that it is you causing the error, e.\,g. undefined variables. \texttt{Snakemake} will inform you about the nature of the issue. Read the error output carefully. Report when sure it is not you.
+	\end{question}
+	\pause
+	\begin{question}[How?]
+		Indicate the error message and what is leading to it. If you need special input to reproduce the issue, upload the input somewhere or attach minimal input to the issue report.
+	\end{question}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Reporting \texttt{Snakemake} Issues}
+  \begin{question}[Where to?]
+  	 The \lhref{https://github.com/snakemake/snakemake/issues}{issue tracker of the \texttt{Snakemake} project}.
+  \end{question}	
+  \pause
+  \begin{question}[What?]
+  	Clearly unexpected behaviour. Or tracebacks pointing to \texttt{Snakemake} itself. 
+  \end{question}
+  \pause
+  \begin{question}[How?]
+  	Indicate the error message and what is leading to it (e.\,g. the command line you used). If you need special input to reproduce the issue, upload the input somewhere or attach minimal input to the issue report.
+  \end{question}
+\end{frame}
+
