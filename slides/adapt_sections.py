@@ -12,12 +12,32 @@ This is a utility script:
     count.
 """
 
+import argparse
 from glob import glob
 import math
 import os
 import re
+import sys
 
 section_re = re.compile('\\\section\{')
+infile_re =  re.compile(r'(\\input)|(\\include)')
+extract_re = re.compile(r'(?<=\{).+?(?=\})')
+
+def check_suffix(fnames):
+    checked = list()
+    for fname in fnames:
+        if not fname.endswith(".tex"):
+           fname = fname + ".tex"
+        checked.append(fname)
+    return checked
+
+def screen_master(masterdoc):
+    fnames = list()
+    with open(masterdoc) as infile:
+        for line in infile:
+            if infile_re.match(line):
+                fnames.extend(extract_re.findall(line))
+    return check_suffix(fnames)
 
 def count_matching_lines(fp):
     count = 0
@@ -71,7 +91,11 @@ def find_and_replace(boundaries, fname):
             outfile.write(line)
         
 if __name__ == '__main__':
-    file_list  = glob('*tex')
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--master-tex', required = True,
+      help = "indicate a TeX master document")
+    args = parser.parse_args()
+    file_list = screen_master(args.master_tex)
     count      = count_sections(file_list)
     print('Found %d sections.' % count)
     boundaries = define_boundaries(count)
