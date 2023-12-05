@@ -1,6 +1,11 @@
+editorfile = "common/editor_gedit_mainz.tex"
+% The next line indicates the slides explaining
+% a condarc file on a cluster, copy and adjust
+% for your cluster.
 condarcfile = "common/condarc_mogon.tex"
 % these are the path names to contain sample data
 % see the README for explanations.
+>>>>>>> main
 pathtoexercise = "/lustre/project/hpckurs/workflows/"
 pathtoclozure = "/lustre/project/hpckurs/cloze/"
 pathtosolution = "/lustre/project/hpckurs/solutions/"
