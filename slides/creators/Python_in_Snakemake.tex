@@ -209,15 +209,8 @@ $ snakemake --debug
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]
-  \frametitle{Preparing the next exercise:}
-  
-\end{frame}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]
   \frametitle{We want to plot our Results!}
-  Add the following rule to your \altverb{Snakefile} we could plot our variant statistics:
+  We now add the following rule to your \altverb{Snakefile} we could plot our variant statistics (see \pathtoclozure{06\_Sankefile}):
   \begin{lstlisting}[language=Python,style=Python]
 rule plot_quals:
     input:
@@ -234,9 +227,11 @@ rule plot_quals:
   \end{task}
 \end{frame}
 
+\setcounter{preframe_handson}{\value{handson}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]
   \frametitle{\HandsOn{Adding the Plotting Script}}
+  \setcounter{handson}{\value{preframe_handson}}
   \begin{task}
   	Open an editor and follow along.
   \end{task}
@@ -337,8 +332,6 @@ plt.hist(quals)
 plt.savefig(snakemake.output[0])
    \end{lstlisting}
   \end{onlyenv}
-  
-
 \end{frame}
 
 

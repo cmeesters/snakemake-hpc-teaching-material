@@ -325,11 +325,11 @@ minimap                     0.2_r124      h5bf99c6_4  bioconda
           \item \emph{one} environment per workflow
           \item the environment named as the workflow
           \item this way, we have a bundle of tools, activate the environment for it
-          \item \texttt{snakemake} workflows will install the tools you need for a particular workflow - only \emph{if} these tools are still missing
+          \item \texttt{Snakemake} workflows will install the tools you need for a particular workflow - only \emph{if} these tools are still missing
          \end{itemize}
   \end{hint}
   \begin{hint}[Note]
-  	For now we will not use \texttt{snakemake} to install our software. This topic will be covered later.
+  	For now we will not use \texttt{Snakemake} to install our software. This topic will be covered later.
   \end{hint}
 \end{frame}
 
@@ -354,7 +354,7 @@ $ micromamba create \
   \frametitle{\HandsOn{Creating your own Environment}}
   Now, create your first environment. We will
   \begin{itemize}
-  	\item work in the \altverb{HOME} directory with
+  	\item work in the \altverb{snakemake_tutorial} directory with
   	\item a \textit{named} environment
   	\item use the downloaded \altverb{environment.yaml} file to define the software stack
   	\item pre-compile all Python files with the \altverb{--pyc} flag

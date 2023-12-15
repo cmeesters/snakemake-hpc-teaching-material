@@ -25,6 +25,7 @@
                       \item Understand the components of a Snakefile: rules, inputs, outputs, and actions.
                       \item Write a simple Snakefile.
                       \item Run Snakemake from the shell.
+                      \item Learning what a "target" stands for and to use it.
      \end{enumerate}
    \end{docs}
 \end{frame}
@@ -47,6 +48,23 @@ $ snakemake <other arguments> \
   \end{exampleblock}
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+	\frametitle{Specifiying \texttt{Snakefile}s (Details)}
+	\begin{docs}[\texttt{Snakemake}s Default \texttt{Snakefile}]
+		The workflow definition in form of a snakefile. Usually, you should not need to specify this. By default, \texttt{Snakemake} will search for "\altverb{Snakefile}", "\altverb{snakefile}", "\altverb{workflow/Snakefile}", "\altverb{workflow/snakefile}" beneath the current working directory, in this order.\newline
+		When using a different layout, you can use
+		\begin{lstlisting}[language=Bash, style=Shell]
+$ snakemake <other arguments> \
+> --snakefile <path to snakefile>
+	    \end{lstlisting}
+	\end{docs}
+    \pause
+    \begin{hint}
+      On clusters we recommend working from \altverb{HOME} and configuring workflows such that they point to data on project file systems. How and the reasons why will be covered.
+    \end{hint}
+\end{frame}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{A first Step or ``Rule''}
@@ -64,9 +82,9 @@ $ snakemake <other arguments> \
 \dirtree{%
 .1 {\textit{workflow\ folder}}.
 .2 {scripts}.
-.3 {some\ scriptfile.py}.
-.3 {some\ scriptfile.sh}.
-.3 {some\ scriptfile.R}.
+.3 {some\_scriptfile.py}.
+.3 {some\_scriptfile.sh}.
+.3 {some\_scriptfile.R}.
 .2 {Snakefile}.
 .2 {and more \ldots}.
 }}
@@ -99,7 +117,7 @@ rule bwa_map:
         " mapped_reads/A.bam"
     \end{lstlisting}
     \begin{docs}
-    	This code is build file, which for \texttt{Snakemake} is called a \texttt{Snakefile} -- a file executed by \texttt{Snakemake}.
+    	This code is build file, which for \texttt{Snakemake} is called a \newline "\texttt{Snakefile}" -- a file executed by \texttt{Snakemake}.
     \end{docs}
     \end{onlyenv}
   \begin{onlyenv}<2| handout:0>
@@ -137,7 +155,7 @@ rule bwa_map:
     The \altverb{input} and \altverb{output} directives are followed by lists of files that are expected to be used or created by the rule. In the simplest case, these are just explicit Python strings.
   \end{onlyenv}
   \begin{onlyenv}<4| handout:0>
-   The \altverb{shell} may be one line or contain line breaks:
+   The \altverb{shell} directive contains one ore more lines ($+$ line breaks) and sets the command executed on the Shell:
   \begin{lstlisting}[language=Python,style=Python]
 rule bwa_map:
     input:
@@ -168,7 +186,7 @@ rule bwa_map:
         " | samtools view -Sb - >"
         " mapped_reads/A.bam"
     \end{lstlisting}
-    You will find the working content in \altverb{01_Snakefile}, too.
+    You will find working content in the file \pathtoclozure{01\_Snakefile}, too.
   \end{onlyenv}
 \end{frame}
 
@@ -276,8 +294,38 @@ rule bwa_map:
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]
-  \frametitle{Introducing Wildcards}
-  \altverb{input} and \altverb{output} can be referenced in our file, with an expression called ``wildcard'':
+	\frametitle{\HandsOn{Introducing Wildcards}}
+	\altverb{\{input\}} and \altverb{\{output\}} are so-called "wildcards": We can use them 
+	to reference our in- and output in the \altverb{shell} directive, e.\,g.:
+	\begin{lstlisting}[language=Python,style=Python]
+rule foo:
+   input: replicate_1.txt,
+          replicate_2.txt
+   output: result.txt
+   # The following command will concatenate
+   # the input files.
+   shell: "cat {input} > {output}
+    \end{lstlisting}
+    \begin{docs}
+      If the in-/output has multiple lines, like in this example, \texttt{Snakemake} will concatenate them, separated by a whitespace. In other words \altverb{\{input\}} will contain \altverb{replicate_1.txt replicate_2.txt}.
+    \end{docs}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+	\frametitle{\HandsOn{Introducing Wildcards}}
+	\begin{task}
+	   Your task is simple to introduce the \altverb{\{input\}} and \altverb{\{output\}}  wildcards in our current \altverb{bwa_map} rule. Replace the input and output within the \altverb{shell} directive using these wildcards.
+	\end{task}
+    \begin{hint}
+       Remember, \texttt{Snakemake} will concatenate multiline in- or output. Refer to  \altverb{02\_Snakefile} in your tutorial folder for the task setting.
+    \end{hint}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{Introducing Wildcards - The "Solution"}
+  Now, \altverb{\{input\}} and \altverb{\{output\}} reference the in- and output:
   \begin{lstlisting}[language=Python,style=Python]
 rule bwa_map:
     input:
@@ -290,14 +338,23 @@ rule bwa_map:
         " | samtools view -Sb - >"
         " {output}"
     \end{lstlisting}
-    Since the rule has multiple input files, \texttt{Snakemake} will concatenate them, separated by a whitespace. In other words, \texttt{Snakemake} will replace \altverb{\{input\}} with \altverb{data/genome.fa data/samples/A.fastq} before executing the command.\newline
-    A working example can be found in \altverb{02_Snakefile}.
+    As we have multiline input \texttt{Snakemake} will replace \altverb{\{input\}} with \altverb{data/genome.fa data/samples/A.fastq} before executing the command.\newline
+    A working solution can be found in \pathtosolutions{02\_Snakefile}.
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]
-  \frametitle{Further Workflow Decoration}\footnotesize 
-  \texttt{Snakemake} allows generalizing rules by using named wildcards. Simply replace the \altverb{A} in the second input file and in the output file with the wildcard \altverb{\{sample\}}, to yield:
+  \frametitle{\HandsOn{Further Workflow Decoration}}
+  (Usually), experiments consists of more than one input, e.\,g. several replicas might be present.\newline
+  \begin{task}{Introducing the \altverb{sample} Wildcard}
+    \texttt{Snakemake} allows generalizing rules by using named wildcards, too. Simply replace the \altverb{A} in the second input file and in the output file with the wildcard \altverb{\{sample\}}.\newline
+    You may refer to the \pathtoclozure{03\_Snakefile} template.
+  \end{task}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{Further Workflow Decoration -- Solution} 
   \begin{lstlisting}[language=Python,style=Python,basicstyle=\footnotesize]
 rule bwa_map:
     input:
@@ -311,12 +368,26 @@ rule bwa_map:
   When \texttt{Snakemake} determines that this rule can be applied to generate a target file by replacing the wildcard \altverb{\{sample\}} in the output file with an appropriate value, it will propagate that value to all occurrences of \altverb{\{sample\}} in the input files and thereby determine the necessary input for the resulting job. 
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-  \frametitle{One Caveat!}
-  \begin{alertblock}{Multiple Wildcards}
-    You can have multiple wildcards in your file paths, however, to avoid conflicts with other jobs of the same rule, \emph{all output files} of a rule \emph{have to contain exactly the same wildcards}.
-  \end{alertblock}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{\HandsOn{Mini-Task: add the \texttt{sample} Wildcard}}
+  \vspace{-0.5em}
+  \begin{task}
+  	Simply refer to your current \texttt{Snakefile} or to the cloze text in \pathtoclozure{03\_Snakefile}. Replace the \altverb{A} in the second input file and in the output file with the wildcard \newline "\altverb{\{sample\}}".
+  	Then run:
+    \begin{lstlisting}[language=Bash, style=Shell]
+$ snakemake -np mapped_reads/B.bam
+    \end{lstlisting}
+    \texttt{Snakemake} will determine that the rule \altverb{bwa_map} can be applied to generate the target file by replacing the wildcard \altverb{\{sample\}} with the value \altverb{B}.
+    \vspace{-0.5em}
+    \begin{hint}
+      If your workflow does not work, find the solution in\newline\pathtosolutions{\\03\_Snakefile}.
+    \end{hint}
+  \end{task}
+  \begin{docs}{Background}
+  When \texttt{Snakemake} determines that this rule can be applied to generate a target file by replacing the wildcard \altverb{\{sample\}} in the output file with an appropriate value, it will propagate that value to all occurrences of \altverb{\{sample\}} in the input files and thereby determine the necessary input for the resulting job.\newline
+      \pathtosolutions{03\_Snakefile}
+  \end{docs}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -335,12 +406,42 @@ $ snakemake -np mapped_reads/A.bam mapped_reads/B.bam
   \begin{lstlisting}[language=Bash, style=Shell]
 $ snakemake -np mapped_reads/{A,B}.bam
   \end{lstlisting}
+  \pause
+  \begin{hint}{Rest Assured!}
+  	We will not need to do all this, when we are finished.
+  \end{hint}	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+	\frametitle{One Caveat!}
+	\begin{alertblock}{Multiple Wildcards}
+		You can have multiple wildcards in your file paths, however, to avoid conflicts with other jobs of the same rule, \emph{all output files} of a rule \emph{have to contain exactly the same wildcards}.
+	\end{alertblock}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]
-  \frametitle{Sorting Alignments}
+  \frametitle{\HandsOn{Sorting Alignments}}
   For later steps, we need the read alignments in the BAM files to be sorted. This can be achieved with the \lhref{https://www.htslib.org/}{\texttt{samtools}} \altverb{sort} command. We add the following rule beneath the \altverb{bwa_map} rule:
+  \begin{lstlisting}[language=Python,style=Python]
+rule samtools_sort:
+    input:
+        ...
+    output:
+        ...
+    shell:
+        "samtools sort -T sorted_reads/{wildcards.sample} "
+        "-O bam {input} > {output}"
+  \end{lstlisting}
+  \begin{task}
+  	Please refer to your template \newline \pathtoclozure{04\_Snakefile} and fill in \altverb{input} and \altverb{output}.
+  \end{task}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{Sorting Alignments / Using Wildcards Solution}
   \begin{lstlisting}[language=Python,style=Python]
 rule samtools_sort:
     input:
@@ -351,21 +452,18 @@ rule samtools_sort:
         "samtools sort -T sorted_reads/{wildcards.sample} "
         "-O bam {input} > {output}"
   \end{lstlisting}
-  %TODO check cloze text correct?
-  \begin{task}
-  	Please refer to your template \altverb{03_Snakefile}.
-  \end{task}
+  You will find this solution in \pathtosolutions{\\04\_Snakefile}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]
-  \frametitle{Using Wildcards}
+  \frametitle{Sorting Alignments / Using Wildcards Background}
   The rule will take  input file from the \altverb{mapped_reads} directory and store a sorted version in the \altverb{sorted_reads} directory.
   \pause
   \begin{docs}
   	\texttt{Snakemake} will automatically create missing directories!
   \end{docs}
-  You noticed \altverb{-T sorted_reads/\{wildcards.sample\}}?
+  You noticed \altverb{-T sorted_reads/\{wildcards.sample\}}? 
   \pause
   For sorting, \texttt{samtools} requires a prefix specified with the flag \altverb{-T}. Here, we need the value of the wildcard \altverb{sample}. \texttt{Snakemake} allows to access wildcards in the shell command via the wildcards object that has an attribute with the value for each wildcard.
 \end{frame}
@@ -411,7 +509,8 @@ expand("sorted_reads/{sample}.bam", sample=SAMPLES)
  \end{lstlisting}
  we obtain a list where the given pattern \altverb{sorted_reads/\{sample\}.bam} was formatted with the values in a given list of samples \altverb{SAMPLES}, i.\,e.
  \begin{lstlisting}[language=Python,style=Python]
-["sorted_reads/A.bam", "sorted_reads/B.bam"]
+SAMPLES = ["sorted_reads/A.bam", 
+           "sorted_reads/B.bam"]
  \end{lstlisting}
 \end{frame}
 
@@ -451,8 +550,61 @@ rule bcftools_call:
         "bcftools mpileup -f {input.fa} {input.bam} | "
         "bcftools call -mv - > {output}"
   \end{lstlisting}
-  This is part of \altverb{05_Snakefile}.
+  We will meet this rule in \pathtoclozure{05\_Snakefile} -- in the next exercise.
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Adding a Target Rule}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+	\frametitle{Introducing: Target Rules}
+	\begin{question}[Why Target Rules?]
+	  So far, we always executed the workflow by specifying a target file at the command line. How cumbersome!\newline
+	  I would be better to make \texttt{Snakemake} figure out, which jobs to run. Right?
+	\end{question}
+    \pause
+	\begin{docs}
+		We remember: \texttt{Snakemake} will automatically determine for a given rule, which expected outcomes are missing and execute all necessary rules, accordingly.\newline\pause
+		The ``trick'' is that a workflow can have a ``target'' rule, which specifies the \emph{final} output(s) of a workflow. Any invokation of \texttt{Snakemake} will then execute \emph{all} rules of a workflow.
+	\end{docs}
+\end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+	\frametitle{\HandsOn{Target Rule Practice}}
+	\begin{docs}
+		If no target is given at the command line, \texttt{Snakemake} will define the first rule of the \texttt{Snakefile} as the target.
+	\end{docs}
+	Conventionally, this rule is named \altverb{all}. This means that we add a rule at the top of our workflow:\newline
+	\begin{onlyenv}<1| handout:0>
+		\begin{question}
+			Which is our target file?
+		\end{question}
+		\begin{lstlisting}[language=Python,style=Python]
+rule all:
+	input: 
+		\end{lstlisting}
+	\end{onlyenv}
+	\begin{onlyenv}<2| handout:1>
+	   \begin{task}
+	   	  Take the template \pathtoclozure{05\_Snakefile} and fill in the target in the \altverb{all} rule. Try to run the workflow!
+	   \end{task}
+	\end{onlyenv}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+	\frametitle{Target Rule Practice -- Solution}
+	Our target rule is:
+	\begin{lstlisting}[language=Python,style=Python]
+rule all:
+    input: 
+	    "calls/all.vcf"
+	\end{lstlisting}
+    \pause
+    \begin{hint}
+       Essentially, you can add all output files you want to keep (e.\,g. plots, final results) to \altverb{all}.
+    \end{hint}
+    The solution can be found at \pathtosolutions{\\05\_Snakefile}
+\end{frame}

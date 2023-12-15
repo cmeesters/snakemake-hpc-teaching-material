@@ -1,0 +1,26 @@
+rule bwa_map:
+    input:
+        "data/genome.fa",
+        "data/samples/A.fastq"
+    output:
+        "mapped_reads/A.bam"
+    shell:
+        "bwa mem data/genome.fa"
+        " data/samples/A.fastq"
+        " | samtools view -Sb - >"
+        " mapped_reads/A.bam"
+
+# Task: Complement the following rule
+#
+#  - its input stems from the bwa_map-rule
+#  - be sure to use the {sample} wildcard, too
+#  - its output should go into a
+#    'sorted_reads' directory.
+rule samtools_sort:
+    input:
+        ...
+    output:
+        ...
+    shell:
+        "samtools sort -T sorted_reads/{wildcards.sample} "
+        "-O bam {input} > {output}"

@@ -30,26 +30,52 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \begin{frame}[fragile]
-  \frametitle{\HandsOn{Copy our Course Sample Data}}
+  \frametitle{\HandsOn{Getting Your Course Material I}}
   We shall copy a few install scripts (which also will download some sample data).\newline
-  Please copy \texttt{\configparam{pathtoexercise}}.\newline
-  \begin{lstlisting}[language=Bash, style=Shell]
+  Please copy the directory \configparam{pathtosetup}.\newline
+  \begin{hint}
+  	Remember, to copy an entire directory, you can use:
+  	\begin{lstlisting}[language=Bash, style=Shell]
 $ cp -r <path> ~/.
-  \end{lstlisting}
-  \begin{hint}[Note]
-	The slides assume that you are working in your HOME. Then typing the \textasciitilde{} is not necessary.
+  	\end{lstlisting}
+    We assume that you are working in your \altverb{HOME}. Then typing the \textasciitilde{} is not necessary.
   \end{hint}
+  \pause
+  Now, change into this directory!  
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \begin{frame}[fragile]
-  \frametitle{\HandsOn{Copy our Tutorial Sample Data}}
+  \frametitle{\HandsOn{Getting Your Course Material II}}
+  \begin{columns}[t]
+	 \begin{column}{.5\textwidth}
+		When copied, \altverb{cd} into this directory.\newline The command \altverb{tree} should show:
+	 \end{column}
+	 \begin{column}{.5\textwidth}
+	   \begin{minipage}[t]{0.5\textwidth}
+		 \setstretch{0.1}
+		 {\footnotesize \DTsetlength{0.2em}{1em}{0.2em}{0.4pt}{.6pt}
+			 \dirtree{%
+                 .1 {.}.
+                 .2 {condarc}.
+                 .2 {get\_data.sh}.
+                 .2 {tutorial}.
+                 .3 {template\_files}.
+                 .3 {\ldots}.
+			}}
+      \end{minipage}
+	\end{column}
+  \end{columns}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\begin{frame}[fragile]
+  \frametitle{\HandsOn{Obtaining Your Tutorial Sample Data}}
   Please run the \altverb{get_data.sh} script you just copied:
   \begin{lstlisting}[language=Bash, style=Shell,basicstyle=\footnotesize]
 $ bash get_data.sh
   \end{lstlisting}
   \begin{task}
-  	This script will download and unpack the sample data for this course. Please take a look in this
-  	script to understand it. 
+  	This script will download and unpack the sample data for this course. Please take a look in this script to understand it. Where are your sample data after running this script?
   \end{task}
 \end{frame}

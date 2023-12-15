@@ -90,7 +90,7 @@
 %%%%%%%%%%%%%%%%%
 %% PLEASE NOTE %%
 %%%%%%%%%%%%%%%%%
-% frames containing ``Hand Out'' or ``Interlude'' should be started:
+% Multiple frames containing ``Hand Out'' or ``Interlude'' should be started:
 
 % \setcounter{preframe_handson}{\value{handson}}
 % \begin{frame}[fragile]
@@ -104,7 +104,10 @@
 %   \setcounter{interlude}{\value{preframe_interlude}}
 %   \frametitle{Interlude -- Parameter Extension}
 
-% respectively.
+% respectively. Single frames may just start with
+
+% \begin{frame}[fragile]   
+%   \frametitle{\HandsOn{Using \texttt{find}}}
 
 \newcounter{handson}
 \setcounter{handson}{1}
@@ -337,12 +340,10 @@ showstringspaces=false}
 		\MyDat[\arabic{datacount},3]}%
 }
 
-
-
-%\newcommand{\pathtoexercise}[1]{\path{/lustre/project/m2_jgu-ngstraing/workflows/#1}}
-%\newcommand{\pathtoexercise}[1]{\path{ \DTLfetch{data}{thekey}{#1}{thevalue}   }}
-%\newcommand{\pathtoclozure}[1]{\path{/lustre/project/hpckurs/bash-course/cloze/#1}}
-%\newcommand{\pathtosolution}[1]{\path{/lustre/project/hpckurs/bash-course/solutions/#1}}
+%\newcommand{\pathtosetup}[1]{\path{/lustre/project/hpckurs/workflows/#1}}
+\newcommand{\pathtosetup}[1]{\texttt{\configparam{pathtosetup}/#1}}
+\newcommand{\pathtoclozure}[1]{\texttt{\configparam{pathtoclozure}/#1}}
+\newcommand{\pathtosolutions}[1]{\texttt{\configparam{pathtosolutions}/#1}}
 
 \setcounter{tocdepth}{1}
 

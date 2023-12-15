@@ -22,49 +22,10 @@
    \end{question}
    \begin{docs}[Objectives]
    	  \begin{enumerate}
-                      \item Understanding the target idea.
+                      \item Extending the target idea.
                       \item Running simple workflows.
       \end{enumerate}
     \end{docs}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Adding a Target Rule}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-  \frametitle{Why Target Rules}
-  So far, we always executed the workflow by specifying a target file at the command line. How cumbersome!\newline
-  \begin{docs}
-  	We remember: \texttt{Snakemake} will automatically determine for a given rule, which expected outcomes are missing and execute all necessary rules, accordingly.\newline\pause
-        The ``trick'' is that a workflow can have a ``target'' rule, which specifies the \emph{final} output(s) of a workflow. Any invokation of \texttt{Snakemake} will then execute \emph{all} rules of a workflow.
-   \end{docs}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]
-  \frametitle{Best Practice}
-  \begin{docs}
-  	If no target is given at the command line, \texttt{Snakemake} will define the first rule of the \texttt{Snakefile} as the target.
-  \end{docs}
-  Conventially, this rule is named \altverb{all}. This means that we add a rule at the top of our workflow:\newline
-  \begin{onlyenv}<1| handout:0>
-   \begin{question}
-   	  Which is our target file?
-   \end{question}
-   \begin{lstlisting}[language=Python,style=Python]
- rule all:
-    input: 
-   \end{lstlisting}
-  \end{onlyenv}
-  \begin{onlyenv}<2| handout:1>
-   Our target rule is:
-   \begin{lstlisting}[language=Python,style=Python]
- rule all:
-    input: 
-        "plots/quals.svg"
-   \end{lstlisting}
-  \end{onlyenv}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -73,7 +34,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]
   \frametitle{Our ``final'' Workflow}
-  Refer to \altverb{06_Snakefile} as a reference.
+  \footnotesize{Refer to \pathtosolutions{\\06\_Snakefile} as the workflow solution, so far.}
+  \vspace{-1em}
   \begin{columns}
     \begin{column}{0.5\textwidth}
       \begin{lstlisting}[language=Python,style=Python,basicstyle=\tiny]
@@ -81,8 +43,8 @@ SAMPLES = ["A", "B"]
 
 rule all:
     input:
-        "plots/quals.svg"
-
+        "plots/quals.svg",
+        "calls/all.vcf"
 
 rule bwa_map:
     input:

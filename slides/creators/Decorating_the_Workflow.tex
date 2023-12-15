@@ -19,7 +19,7 @@
   \frametitle{What is this about?}
    \begin{question}[Questions]
    	  \begin{itemize}
-         \item How can a workflow be made really usable?
+         \item How can a workflow be made really usable on a cluster?
          \item How can I avoid changing the workflow source for every new input?
       \end{itemize}
    \end{question}
@@ -70,44 +70,6 @@
 \subsection{The Configuration File}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]
-  \frametitle{The \texttt{Snakemake} \texttt{resources} Section}
-  \texttt{Snakemake} rules provide an additional \altverb{resource} section:
-  \begin{lstlisting}[language=Python,style=Python]
-rule <name>:
-   ...
-   resources:
-      partition='parallel',
-      mem_mb=1800,
-      cpus_per_task=4
-  \end{lstlisting}
-  \begin{hint}
-  	Note the \textbf{,}!
-  \end{hint}
-  \pause
-  \begin{docs}
-  	You \emph{may} define \emph{any} resource keyword within any rule.
-  \end{docs}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-  \frametitle{The \texttt{Snakemake} \texttt{resources} Section - its Downside}
-  \begin{block}{Every Resource Spec needs a Change per Rule???}
-   You might have noticed, this specification per rule is most untidy. \texttt{Snakemake}'s design principle is: ship workflows which run \emph{everywhere} \& \emph{every time}.
-   \newline \pause
-   Relax: Every bit we can specify:
-   \begin{itemize}
-    \item in a \texttt{Snakefile},
-    \item on the command line,
-    \item and re-usable in configuration files!
-   \end{itemize}
-
-  \end{block}
-
-\end{frame} 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
   \frametitle{The Configuration File}
   If observed closely you have seen this file:\newline
@@ -138,7 +100,7 @@ $ snakemake ... --configfile ./config/config.yaml
   \end{lstlisting}
   Or, alternatively in your \texttt{Snakefile}:
   \begin{lstlisting}[language=Python,style=Python]
-configfile: "config.yaml"
+configfile: "config/config.yaml"
   \end{lstlisting}  
   \begin{question}
   	How do pick up resource parameters in out \texttt{Snakefile}?!
@@ -226,18 +188,21 @@ rule bwa_map:
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]
   \frametitle{\HandsOn{Adding a new Sample}}
-  In the \altverb{data/samples} folder, there is an additional sample \altverb{C.fastq}. Add that sample to the config file and see how \texttt{Snakemake} wants to recompute the part of the workflow belonging to the new sample, when invoking with 
-  \begin{lstlisting}[language=Bash, style=Shell]
+  \begin{task}
+  	 Refer to \pathtoclozure{\\07\_Snakefile} as the current workflow example containing the mentioned input function.\newline
+  	 In the \altverb{data/samples} folder, there is an additional sample \altverb{C.fastq}. Add that sample to the config file and see how \texttt{Snakemake} wants to recompute the part of the workflow belonging to the new sample, when invoking with 
+  	 \begin{lstlisting}[language=Bash, style=Shell]
 $ snakemake -n --forcerun bcftools_call
-  \end{lstlisting}
-  Copy the file XXX as your \texttt{Snakefile}. 
+  	 \end{lstlisting}
+  \end{task}
+ 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]
   \frametitle{Rule Parameters}
   \begin{warning}
-  	Frequently, party programs cannot be used with their defaults, additional parameters are required.
+  	Frequently, $3^\mathsf{rd}$ party programs cannot be used with their defaults, additional parameters are required.
   \end{warning}
   In our workflow, it is reasonable to annotate aligned reads with so-called read groups, that contain metadata like the sample name. \newline
   To do so, we add to our \altverb{bwa_map}-rule:
@@ -260,10 +225,10 @@ rule bwa_map:
 \begin{frame}[fragile]
   \frametitle{Rule Parameters}
   This is usually part of the configuration file(s), too.\newline
-  In your config file:
+  In your config file (\altverb{r"<something"} stands for "raw strings"):
   \begin{lstlisting}[language=Python,style=Python]
 bwa_map:
-   rg=xxx
+   rg=r"@RG\tID:{sample}\tSM:{sample}"
   \end{lstlisting}
   and in your code:
   \begin{lstlisting}[language=Python,style=Python]
@@ -305,11 +270,27 @@ rule bwa_map:
     # we combine stdout & stdout
     shell:
         "(bwa mem -R '{params.rg}' {input} "
-        "| samtools view -Sb - > {output}) 2> {log}"
+        "| samtools view -Sb - > {output}) 6> {log}"
    \end{lstlisting}
-   \begin{task}
-     Please try this out.
-   \end{task}
+   \begin{docs}[Background]
+     \altverb{&} bundles the \altverb{stderr} and \altverb{stdout} stream and \altverb{>} redirects both to the log file. 
+   \end{docs}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{\HandsOn{Logging in Practice}}
+  \begin{task}
+  	 Remember, the general to implement a logging directive syntax is:
+  	 \begin{lstlisting}[language=Python,style=Python]
+rule <name>:
+    ...
+    log: "path/to/logs/{wildcard.log}
+  	\end{lstlisting}
+    Implement the log directive for all rules you consider worth being logged. What do you observe?
+    \newline
+    You can take the \pathtoclozure{//xxx} sample file to proceed.
+  \end{task}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -372,13 +353,12 @@ $ du -sh *reads
   Add the \altverb{temp()} function to \altverb{bwa_map}- and \altverb{samtools_sort}-rules, re-run the workflow and the \altverb{du}-command. What do you observer?
 \end{frame}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The Command Line}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-  \frametitle{Parameterization via the Command Line}
+  \frametitle{Parametrization via the Command Line}
   \centering
   \includegraphics[width=0.55\textwidth]{misc/command_line_logo.png}
 \end{frame}

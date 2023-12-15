@@ -1,0 +1,16 @@
+#TASK: Within the 'shell' directive change
+#      the inputs to the '{input}' wildcard
+#      and the output to the '{output}'
+#      wildcard, respectively.
+
+rule bwa_map:
+    input:
+        "data/genome.fa",
+        "data/samples/A.fastq"
+    output:
+        "mapped_reads/A.bam"
+    shell:
+        "bwa mem data/genome.fa"
+        " data/samples/A.fastq"
+        " | samtools view -Sb - >"
+        " mapped_reads/A.bam"
