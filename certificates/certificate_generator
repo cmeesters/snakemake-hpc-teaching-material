@@ -50,8 +50,8 @@ def concatenate_pdfs():
     print(items)
     subprocess.call(items)
 
-def parse_participants(infile, only_name, name_index=2,
-                       surname_index=3):
+def parse_participants(infile, only_name, name_index=1,
+                       surname_index=0):
     people = list()
     #infile.readline() # skip header
     for line in infile:
@@ -85,7 +85,10 @@ if __name__ == '__main__':
 
     participants = parse_participants(args.exportfile, args.only_name, name_index = args.nindex, surname_index = args.sindex)
 
-    data = yaml.safe_load(Path(args.configfile).read_text())
+    if args.configfile:
+        data = yaml.safe_load(Path(args.configfile).read_text())
+    else:
+        data = dict()
 
     # add the path to the measurements
     data['PATH']   = PATH
