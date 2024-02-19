@@ -15,7 +15,9 @@
  \begin{minipage}{\textwidth}
   \includegraphics[width=4cm]{../images/logos/alliance_logo.png}
  \end{minipage}
-
+  \begin{flushright}
+     \includegraphics[width=\columnwidth]{../images/logos/Logo_quer_cmyk.pdf}
+ \end{flushright}
  \columnbreak
 \end{multicols}
 
@@ -67,13 +69,13 @@ The course take about two days (app. 12 hours) and covered:
   <% if instructor.organization %>
      <<instructor.organization|default("~", true)>> \newline
   <% endif %>
-  <% if instructor.organization %>
+  <% if instructor.organization2 %>
     <<instructor.organization2|default("~", true)>> \newline
   <% endif %>
-  <% if instructor.organization %>
+  <% if instructor.address %>
      <<instructor.address|default("~", true)>>\newline
   <% endif %>
-  <% if instructor.organization %>
+  <% if instructor.city %>
      <<instructor.city|default("~", true)>>\newline
   <% endif %>
  \end{minipage}
