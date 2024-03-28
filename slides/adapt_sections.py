@@ -19,17 +19,19 @@ import os
 import re
 import sys
 
-section_re = re.compile('\\\section\{')
-infile_re =  re.compile(r'(\\input)|(\\include)')
-extract_re = re.compile(r'(?<=\{).+?(?=\})')
+section_re = re.compile("\\\section\{")
+infile_re = re.compile(r"(\\input)|(\\include)")
+extract_re = re.compile(r"(?<=\{).+?(?=\})")
+
 
 def check_suffix(fnames):
     checked = list()
     for fname in fnames:
         if not fname.endswith(".tex"):
-           fname = fname + ".tex"
+            fname = fname + ".tex"
         checked.append(fname)
     return checked
+
 
 def screen_master(masterdoc):
     fnames = list()
@@ -39,6 +41,7 @@ def screen_master(masterdoc):
                 fnames.extend(extract_re.findall(line))
     return check_suffix(fnames)
 
+
 def count_matching_lines(fp):
     count = 0
     for line in fp:
@@ -46,22 +49,27 @@ def count_matching_lines(fp):
             count += 1
     return count
 
+
 def count_sections(file_list):
     count = 0
     for fname in file_list:
         try:
             with open(fname) as fp:
-               count += count_matching_lines(fp)
+                count += count_matching_lines(fp)
         except:
             print(f"Error treating: '{fname}'")
     return count
 
+
 def define_boundaries(section_count):
-    fhe = math.floor(section_count/2)
-    return {'lower': 1,
-            'upper': section_count,
-            'first_half_end': fhe,
-            'second_half_start': fhe + 1}
+    fhe = math.floor(section_count / 2)
+    return {
+        "lower": 1,
+        "upper": section_count,
+        "first_half_end": fhe,
+        "second_half_start": fhe + 1,
+    }
+
 
 def find_and_replace(boundaries, fname):
     # tex files aren't big, read all content in memory
@@ -76,35 +84,47 @@ def find_and_replace(boundaries, fname):
     first_done, second_done = False, False
     for lcount, line in enumerate(lines):
         if not first_done:
-            if 'currentsection' in line:
+            if "currentsection" in line:
                 first_done = lcount
                 break
-    for lcount, line in enumerate(lines[first_done + 1:]):
+    for lcount, line in enumerate(lines[first_done + 1 :]):
         if not second_done:
-            if 'currentsection' in line:
+            if "currentsection" in line:
                 second_done = lcount + first_done + 1
                 break
 
     if not (first_done and second_done):
         print("no outline found for %s -> skipping" % fname)
-        return 
+        return
 
     # adapt the two lines with our new boundaries:
-    lines[first_done] = "            \\tableofcontents[sections={%d-%d},currentsection]\n" % (boundaries['lower'], boundaries['first_half_end'])
-    lines[second_done] = "            \\tableofcontents[sections={%d-%d},currentsection]\n" % (boundaries['second_half_start'], boundaries['upper'])
-    
-    with open(fname, 'w') as outfile:
+    lines[
+        first_done
+    ] = "            \\tableofcontents[sections={%d-%d},currentsection]\n" % (
+        boundaries["lower"],
+        boundaries["first_half_end"],
+    )
+    lines[
+        second_done
+    ] = "            \\tableofcontents[sections={%d-%d},currentsection]\n" % (
+        boundaries["second_half_start"],
+        boundaries["upper"],
+    )
+
+    with open(fname, "w") as outfile:
         for line in lines:
             outfile.write(line)
-        
-if __name__ == '__main__':
+
+
+if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--master-tex', required = True,
-      help = "indicate a TeX master document")
+    parser.add_argument(
+        "--master-tex", required=True, help="indicate a TeX master document"
+    )
     args = parser.parse_args()
     file_list = screen_master(args.master_tex)
-    count      = count_sections(file_list)
-    print('Found %d sections.' % count)
+    count = count_sections(file_list)
+    print("Found %d sections." % count)
     boundaries = define_boundaries(count)
     for fname in file_list:
         find_and_replace(boundaries, fname)

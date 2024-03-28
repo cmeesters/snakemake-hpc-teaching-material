@@ -1,0 +1,24 @@
+instructor:
+  name: "Dr. Christian Meesters"
+  affiliation: "Johannes Gutenberg Universität Mainz"
+  affiliation2: "NHR SüdWest" # may be empty
+
+course:
+  date: "datestring" # maybe: "\today"
+  # Editors recommendations are a matter of taste and technological
+  # setups (e.g. on-demand setups). Hence, specify an editor-slide,
+  #  here:
+  editorfile: "common/editor_gedit_mainz.tex"
+  # The next line indicates the slides explaining
+  # a condarc file on a cluster, copy and adjust
+  # for your cluster.
+  condarcfile: "common/condarc_mogon.tex"
+  # these are the path names to contain sample data
+  # see the README for explanations.
+  pathtosetup: "/lustre/project/m2\_jgu-ngstraining/workflows"
+  pathtosolutions: "/lustre/project/hpckurs/m2\_jgu-ngstraining"
+  # This is the selected slide to explain the 'Hello World' script
+  # to introduce SLURM. It requires different account and partition
+  # settings on every cluster.
+  hello_world_script: "common/Hello_World_HPC_MogonII.tex"
+  #

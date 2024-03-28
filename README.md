@@ -27,6 +27,28 @@ Workflow for pull requests:
 - (s.o. else) perform review (switch to branch and try; check the quality)
 - merge and delete source branch
 
+## Rendering Slides
+
+In order to typeset the slides you want, you can simply run
+
+```bash
+$ ./render --master-tex <tex master document> -c <configfile>
+```
+
+Two master slide sets are offered:
+
+- `slides/Snakemake_HPC_Users.tex` - which contains a slide set tailored for users of ready-to use and non-curated workflows, their HPC parameterization and execution
+- `slides/Snakemake_HPC_Creators.tex` - which contains a slide set tailored for creators of new workflows.
+
+### Customizing Slides
+
+Configuration files can be found in the config folder. The "generic" one is
+
+- `config/config_Mainz_NHR.yaml`
+
+just because it is the first. Others will follow.The file `config/config_for_github.yaml` is a reduced version intended for the GitHub CI runner and can otherwise be ignored.
+
+In essence, every detail is configurable. Developers can be approached to add new details to be configurable. Any configuration file should be human readable and commented to make sense. 
 
 ## Progress
 

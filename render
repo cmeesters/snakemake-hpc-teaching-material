@@ -1,0 +1,97 @@
+#!/usr/bin/env python3
+
+import argparse
+from tempfile import TemporaryDirectory
+import logging
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import yaml
+
+# non standard libraries
+from jinja2 import Environment, FileSystemLoader
+
+options = {
+    "block_start_string": "<+++",
+    "block_end_string": "+++>",
+    "variable_start_string": "<++",
+    "variable_end_string": "++>",
+    "comment_start_string": "{=",
+    "comment_end_string": "=}",
+}
+
+PATH = os.path.split(os.path.realpath(__file__))[0]
+
+jinja_env = Environment(loader=FileSystemLoader(PATH), **options)
+
+
+def render_tex(env, template):
+    template = template
+    tpl = jinja_env.get_template(template)
+    x = tpl.render(env)
+    return x
+
+
+def to_file(tex, fname, tempdir, path=""):
+    os.listdir(tempdir)
+    with open(os.path.join(tempdir, path, fname), "w") as f:
+        f.write(tex)
+
+
+def get_pdf_name(filename):
+    path_object = Path(filename)
+    new_filename = path_object.with_suffix("." + "pdf")
+    return new_filename
+
+
+def run_pdflatex(fname="out.tex", path="."):
+    outdir = os.path.realpath(os.path.join(os.getcwd(), "slides"))
+
+    subprocess.call(["pdflatex", "-quiet", fname], cwd=path)
+    pdfname = get_pdf_name(fname)
+    shutil.copy(os.path.join(path, pdfname), os.path.join(outdir, pdfname))
+
+
+def parse_config(fname):
+    """
+    will parse the configuration file in YAML format
+    an invalid yaml file, will cause the script to crash
+    """
+    with open(fname) as configfile:
+        data = yaml.safe_load(configfile)
+    return data
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--master-tex", required=True, help="indicate the Master TeX document"
+    )
+    parser.add_argument(
+        "-c",
+        "--configfile",
+        default="config/config.yaml",
+        help="indicate the configuration YAML file - default: 'config/config.yaml'",
+    )
+    args = parser.parse_args()
+
+    logger = logging.getLogger(__name__)
+
+    data = parse_config(args.configfile)
+
+    with TemporaryDirectory() as tempdir:
+        shutil.copytree("images", os.path.join(tempdir, "images"))
+        # creating 'slides' directory (does not exist, yet):
+        Path(os.path.join(tempdir, "slides", "common")).mkdir(parents=True)
+        Path(os.path.join(tempdir, "slides", "users")).mkdir()
+        Path(os.path.join(tempdir, "slides", "creators")).mkdir()
+        for root, dirs, files in os.walk("slides"):
+            for fname in files:
+                if not fname.endswith(".tex"):
+                    continue
+                logger.info(f"Attempt to render {fname}")
+                tex = render_tex(data, os.path.join(root, fname))
+                to_file(tex, fname, tempdir, root)
+        # now the typesetting needs to be triggered
+        run_pdflatex(fname=args.master_tex, path=os.path.join(tempdir, "slides"))

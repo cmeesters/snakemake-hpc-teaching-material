@@ -334,23 +334,6 @@ showstringspaces=false}
 	\endgroup
 	\textbf{Snakemake}
 }
-%
-% this package provides the option to read parameters from a configuration file
-\usepackage{readarray}
-
-\readdef{config/config.dat}{\data}
-\readarray\data\MyDat[-,3]
-\newcommand\configparam[1]{\csname DATA#1\endcsname}
-%\MyDatROWS{} rows of data read.
-
-\newcounter{datacount}
-\setcounter{datacount}{0}%
-\whiledo{\value{datacount} < \MyDatROWS}{%
-	\stepcounter{datacount}%
-	\expandafter\xdef\csname DATA\MyDat[\arabic{datacount},1]\endcsname{%
-		\MyDat[\arabic{datacount},3]}%
-}
-
 
 
 %\newcommand{\pathtoexercise}[1]{\path{/lustre/project/m2_jgu-ngstraing/workflows/#1}}
@@ -386,8 +369,7 @@ showstringspaces=false}
 \subtitle{Workflow Course - Edition 3} 
 
 \author[Snakemake Teaching Alliance]{The "Snakemake Teaching Alliance"}
-%\date{\configparam{date}}
-\date{23. September 2023}
+\date{<++course.date++>}
 
 \hypersetup{colorlinks,linkcolor=,urlcolor=links}
 
