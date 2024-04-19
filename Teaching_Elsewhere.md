@@ -28,10 +28,13 @@ This questionaire helps asking the right questions:
 
 - Cluster Specialties
     - May the course use shared file space for the setup to be copied to? E.g. a workspace? Which are the quota limitations?
+    - Are there quotas for the HOME directory (size, file number)?
     - Which editors or IDEs are provided?
     - Which applications are available to display a simple plot (png, jpeg, svg)?
     - Will the course require and / or get a SLURM reservation?
       - if there are dedicated course accounts, the reservation should be made "magnetic" - then the `--reservation` flag is not necessary
+    - Which partitions does the cluster provide for SMP programs (any restrictions for such software)?
+    - Which partitions does the cluster provide for software (e.g. MPI) using >=1 full nodes?
     - How long will the course run (number of days)?
       - the "Creators" course will require a minimum of 2 days
 
