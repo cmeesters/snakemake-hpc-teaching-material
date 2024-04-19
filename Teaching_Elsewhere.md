@@ -4,6 +4,9 @@
 
 This questionaire helps asking the right questions:
 
+- Organization:
+    - Who is the contact for organizing this course? 
+
 - How does the course room look like?
     - How many seats and PC-screens are available?
     - Is there a "Presenter PC"?
