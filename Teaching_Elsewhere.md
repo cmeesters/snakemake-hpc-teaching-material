@@ -16,7 +16,7 @@ This questionaire helps asking the right questions:
     - Do you need an adaptor for the projector?
     - Which is the OS for participant PCs?
     - Which is the software to log in? (putty, mobaxterm, powershell or plain ssh via Linux - or a terminal on demand)
-    - Is 2FA enforced? Is so: How?
+    - Is 2FA enforced? If so: How?
     - ssh-keys - are they to be prepared?
     - Does the site require course accounts?
     - Is it possible to do paired programming?
