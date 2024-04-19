@@ -29,6 +29,7 @@ This questionaire helps asking the right questions:
 - Cluster Specialties
     - May the course use shared file space for the setup to be copied to? E.g. a workspace? Which are the quota limitations?
     - Are there quotas for the HOME directory (size, file number)?
+    - Which compute node scratch mount points are provided (for stage-in/out)?
     - Which editors or IDEs are provided?
     - Which applications are available to display a simple plot (png, jpeg, svg)?
     - Will the course require and / or get a SLURM reservation?
