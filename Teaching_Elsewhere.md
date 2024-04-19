@@ -18,7 +18,7 @@ This questionaire helps asking the right questions:
     - Which is the software to log in? (putty, mobaxterm, powershell or plain ssh via Linux - or a terminal on demand)
     - Is 2FA enforced? If so: How?
     - ssh-keys - are they to be prepared?
-    - Does the site require course accounts?
+    - Does the site use course accounts?
     - Is it possible to do paired programming?
 
 - Cluster Specialties
