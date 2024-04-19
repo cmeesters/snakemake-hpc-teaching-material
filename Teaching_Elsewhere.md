@@ -12,7 +12,7 @@ This questionaire helps asking the right questions:
     - How many seats and PC-screens are available?
     - Is there a "Presenter PC"?
     - Is it possible to plug in laptop? HDMI?
-    - Which kind the "projector situation" (1 or more, need to have a key)?
+    - Which kind the "projector situation" (1 or more?, need to have a key)?
     - Do you need an adaptor for the projector?
     - Which is the OS for participant PCs?
     - Which is the software to log in? (putty, mobaxterm, powershell or plain ssh via Linux - or a terminal on demand)
