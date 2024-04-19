@@ -20,6 +20,10 @@ This questionaire helps asking the right questions:
     - ssh-keys - are they to be prepared?
     - Does the site use course accounts?
     - Will the site prepare login information to be shared with the lecturer? (e.g. featuring login information on login sheets, login slides, etc.)
+    - May or should participants bring their own device? If so:
+        - Will there be information about it? 
+        - Will there be wifi? 
+        - Will there be power outlets?
     - Is it possible to do paired programming?
 
 - Cluster Specialties
