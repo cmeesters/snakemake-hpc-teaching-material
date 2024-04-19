@@ -19,7 +19,7 @@ This questionaire helps asking the right questions:
 
 - Cluster Specialties
     - May the course use shared file space for the setup to be copied to? E.g. a workspace? Which are the quota limitations?
-    - Which editors or IDS are provided?
+    - Which editors or IDEs are provided?
     - Will the course require and / or get a SLURM reservation?
     - How long will the course run (number of days)?
 
