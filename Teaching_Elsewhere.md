@@ -21,7 +21,9 @@ This questionaire helps asking the right questions:
     - May the course use shared file space for the setup to be copied to? E.g. a workspace? Which are the quota limitations?
     - Which editors or IDEs are provided?
     - Will the course require and / or get a SLURM reservation?
+      - if there are dedicated course accounts, the reservation should be made "magnetic" - then the `--reservation` flag is not necessary
     - How long will the course run (number of days)?
+      - the "Creators" course will require a minimum of 2 days
 
 - Misc
     - Do colleagues on site want to be trained as trainers?
