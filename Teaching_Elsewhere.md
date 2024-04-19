@@ -35,6 +35,7 @@ This questionaire helps asking the right questions:
       - if there are dedicated course accounts, the reservation should be made "magnetic" - then the `--reservation` flag is not necessary
     - Which partitions does the cluster provide for SMP programs (any restrictions for such software)?
     - Which partitions does the cluster provide for software (e.g. MPI) using >=1 full nodes?
+    - How does the cluster support GPU application resource requests (special partitions? special SLURM flags?)?
     - How long will the course run (number of days)?
       - the "Creators" course will require a minimum of 2 days
 
