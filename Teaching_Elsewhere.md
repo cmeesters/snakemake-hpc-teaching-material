@@ -20,6 +20,7 @@ This questionaire helps asking the right questions:
 - Cluster Specialties
     - May the course use shared file space for the setup to be copied to? E.g. a workspace? Which are the quota limitations?
     - Which editors or IDEs are provided?
+    - Which applications are available to display a simple plot (png, jpeg, svg)?
     - Will the course require and / or get a SLURM reservation?
       - if there are dedicated course accounts, the reservation should be made "magnetic" - then the `--reservation` flag is not necessary
     - How long will the course run (number of days)?
