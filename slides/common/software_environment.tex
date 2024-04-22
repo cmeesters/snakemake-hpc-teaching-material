@@ -14,23 +14,6 @@
 	}
 }
 
-
-%
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\begin{frame}
-%	\frametitle{Outline}
-%	\begin{columns}[t]
-%		\begin{column}{.5\textwidth}
-%            \tableofcontents[sections={1-7},currentsection]
-%		\end{column}
-%		\begin{column}{.5\textwidth}
-%            \tableofcontents[sections={8-15},currentsection]
-%		\end{column}
-%	\end{columns}
-%\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 	\frametitle{What is this about?}
 	\begin{question}[Questions]\begin{itemize}
@@ -106,24 +89,6 @@ $ module spider <search string>
   \end{task}
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]
-  \frametitle{Module Naming Schemes}
-   You might have seen module names like:
-   \begin{lstlisting}[language=Bash, style=Shell]
-numlib/FFTW/3.3.10-gompi-2021b   
-   \end{lstlisting}
-   Actual module naming schemes differ from cluster to cluster.
-   \pause
-   \begin{block}{Using Modules with \Snakemake{}}
-     We will learn how to use modules with 
-   \end{block}
-   \pause
-   \begin{task}[Look inside a module to know what will be loaded and set]
-   	  Do ``\altverb{module show <module>}''
-   \end{task}
-\end{frame}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \begin{frame}[fragile]
   \frametitle{That's all Folks}
@@ -157,17 +122,18 @@ You can learn more about modules in 101-HPC courses. Later, we will learn how to
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \begin{frame}
   \frametitle{Conda vs. Module Files}
-  \begin{columns}
+  \begin{columns}[t]
     \begin{column}{0.5\textwidth}
-      Background Module Files
+      Background - \textbf{Module Files}
       \begin{itemize}
-       \item module files provide an environment per software
-       \item the software usually is compiled on the machine (optimized)
+       \item module files provide environment variables per software
+       \item usually software is compiled on the machine (optimized)
+       \item software might be optimized for a network (MPI)
        \item due to differences in cluster naming schemes and setups portability cannot be granted
       \end{itemize}
     \end{column}
     \begin{column}{0.5\textwidth}
-      Background Conda
+      Background - \textbf{Conda}
       \begin{itemize}
        \item Conda is a machine independent package management systems
        \item packaged software is provided pre-compiled (NOT optimized)
@@ -178,77 +144,84 @@ You can learn more about modules in 101-HPC courses. Later, we will learn how to
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+{   
+	\usebackgroundtemplate{
+		\vbox to \paperheight{\vfil\hbox to \paperwidth{\hfil\includegraphics[height=.7\paperheight]{environment/flavours.png}\hfil}\vfil}
+	}
+	\frame{
+		\frametitle{Flavours}
+		\begin{mdframed}[tikzsetting={draw=white,fill=white,fill opacity=0.8,
+				line width=0pt},backgroundcolor=none,leftmargin=0,
+			rightmargin=150,innertopmargin=4pt,roundcorner=10pt]
+			Conda Implementations:
+			\begin{itemize}
+				\item Conda - Python
+				\item Miniconda - Conda with little less overhead
+				\item Mamba - drop-in replacement for "Conda", C\texttt{++}, parallel solver, fast
+				\item \textmu-Mamba - static version of Mamba, little overhead, no "base" environment, slightly different commands
+			\end{itemize}
+		\end{mdframed}
+	}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \begin{frame}[fragile]
-  \frametitle{Installing Conda}
+  \frametitle{Installing Mamba}
   You \emph{could} run
-  \begin{lstlisting}[language=Bash, style=Shell, basicstyle=\small,breaklines=true ]
-$ wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+  \begin{lstlisting}[language=Bash, style=Shell, basicstyle=\tiny,breaklines=true ]
+$ wget https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh
+$ bash Miniforge3-Linux-x86_64.sh
   \end{lstlisting}
-  to retrieve (Mini)Conda (a flavour of conda with less overhead).
+  to retrieve Mamba.\newline\pause
   \begin{hint}
-  	\footnotesize URL is from \url{https://docs.conda.io/en/latest/miniconda.html}.\newline However, we are going to use tweaked scripts provided to you.
+  	We will work through the installation process \emph{together} on the slides to come.
   \end{hint}
-  \pause
-  \begin{hint}
-  	However, instead of downloading, we will work through this together on the slides to come.
-  \end{hint}
+  Instead, please execute the installer script
+  \begin{lstlisting}[language=Bash, style=Shell]
+$ bash install_mamba.sh
+  \end{lstlisting}
 \end{frame} 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-\begin{frame}[fragile]
-  \frametitle{We will favour \emph{\textmu-Mamba} over Conda!}
-  Many know ``Conda'' as a package manager -- and this is correct! But:
-  \begin{block}{Why we recommend using ``\textmu-Mamba''}
-   Conda carries some overhead. Alternative implementations can be faster and require less files. Mamba is a ``drop-in'' for Conda. This means: \emph{every command is the same}, except we will write \altverb{mamba} where usuall \altverb{conda} would be.\newline
-   Why?\newline
-   Mamba is an implementation of Conda, written in \CC{}. It is able to carry out some tasks in parallel and works considerably faster. In turn, \textmu-Mamba is a staticically compiled version of Mamba and does not require a ``base'' environment (we will learn about environments, soon), which means even less overhead.
-  \end{block}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-\begin{frame}[fragile]
-	\frametitle{Installing \sout{Conda}/\textmu-Mamba}
-	Please run
-	\begin{lstlisting}[language=Bash, style=Shell]
-$ "${SHELL}" <(curl -L micro.mamba.pm/install.sh)
-# or in your sample folder
-$ bash install_micromamba.sh
-	\end{lstlisting}
-\end{frame}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-\begin{frame}
-  \frametitle{Installing \sout{Conda}/\textmu-Mamba - II}
+\begin{frame}[fragile]
+  \frametitle{Mamba - Installation - Part I}
+  Start the installation script - if not done:
+  \begin{lstlisting}[language=Bash, style=Shell]
+$ bash install_mamba.sh
+  \end{lstlisting}
   You need to confirm (with ``Enter'')
   \begin{itemize}[<+->]
+  	\item the license agreement
 	\item the binary folder.
 	\item the shell you are using (just to be on the save side)
-	\item whether conda-forge shall be configured (this is a major resource channel)
-	\item the prefix location (where \textmu-Mamba shall be placed)
   \end{itemize} 
-  The tool will tell up about the modification of your \altverb{.bashrc} file (which is executed upon \emph{every} login, we will discuss this in a minute).
+  The tool will tell up about the modification of your \altverb{.bashrc} file (which is executed upon \emph{every} login - if not corrected).
 \end{frame}
 	
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \begin{frame}[fragile]
-  \frametitle{Installing \sout{Conda}/\textmu-Mamba - III}
+  \frametitle{Installing Mamba - Part II}
   \footnotesize
   \begin{columns}[t]
     \begin{column}{0.5\textwidth}
        You now have a section like this in your ``\texttt{\textasciitilde/.bashrc}'':
        \begin{lstlisting}[language=Bash, style=Shell, basicstyle=\tiny, breaklines=true]
-# >>> mamba initialize >>>
-# !! Contents within this block are managed by 'mamba init' !!
-export MAMBA_EXE='/home/<user>/.local/bin/micromamba';
-export MAMBA_ROOT_PREFIX='/home/<prefix>';
-__mamba_setup="$("$MAMBA_EXE" shell hook --shell bash --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('<prefix>/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
-    eval "$__mamba_setup"
+    eval "$__conda_setup"
 else
-    alias micromamba="$MAMBA_EXE"  # Fallback on help from mamba activate
+if [ -f "<prefix>/etc/profile.d/conda.sh" ]; then
+    . "<prefix>/etc/profile.d/conda.sh"
+else
+    export PATH="<prefix>/bin:$PATH"
 fi
-unset __mamba_setup
-# <<< mamba initialize <<<
+fi
+unset __conda_setup
+
+if [ -f "<prefix>/etc/profile.d/mamba.sh" ]; then
+    . "<prefix>/etc/profile.d/mamba.sh"
+fi
+# <<< conda initialize <<<
       \end{lstlisting}
       \bcattention \emph{Every} time you log-in this will be executed. Also, here, ``\texttt{<prefix>}'' denotes \emph{your} prefix.
     \end{column}
@@ -257,18 +230,23 @@ unset __mamba_setup
        {\footnotesize Please edit your ``\texttt{\textasciitilde/.bashrc}'' file and put part in a function, to re-gain manual control:}
        \begin{lstlisting}[language=Bash, style=Shell, basicstyle=\tiny, breaklines=true]
 @function conda_initialize {@
-# >>> mamba initialize >>>
-# !! Contents within this block are managed by 'mamba init' !!
-export MAMBA_EXE='/home/<user>/.local/bin/micromamba';
-export MAMBA_ROOT_PREFIX='/home/<prefix>';
-__mamba_setup="$("$MAMBA_EXE" shell hook --shell bash --root-prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+# !! Contents within this block are managed by 'conda init' !!
+    __conda_setup="$('<prefix>/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
-    eval "$__mamba_setup"
+    eval "$__conda_setup"
 else
-    alias micromamba="$MAMBA_EXE"  # Fallback on help from mamba activate
+if [ -f "<prefix>/etc/profile.d/conda.sh" ]; then
+   . "<prefix>/etc/profile.d/conda.sh"
+else
+   export PATH="<prefix>/bin:$PATH"
 fi
-unset __mamba_setup
-# <<< mamba initialize <<<
+fi
+unset __conda_setup
+
+if [ -f "<prefix>/etc/profile.d/mamba.sh" ]; then 
+    . "<prefix>/etc/profile.d/mamba.sh"
+fi
+# <<< conda initialize <<<
 @}@
       \end{lstlisting}
     \end{column}
@@ -313,7 +291,7 @@ $ conda_initialize # if you have this function
   \frametitle{Searching Software with Conda v. Mamba}
   First you might want to look for software. This is done with
   \begin{lstlisting}[language=Bash, style=Shell]
-$ micromamba search <softwarename>
+$ mamba search <softwarename>
   \end{lstlisting}
   \pause
   \begin{task}
@@ -322,7 +300,7 @@ $ micromamba search <softwarename>
   \pause
   This will list packages with channel and version information, e.\,g.
   \begin{lstlisting}[language=Bash, style=Shell, basicstyle=\tiny]
-$ micromamba search minimap
+$ mamba search minimap
 <snip>
 Loading channels: done
 # Name                       Version           Build  Channel             
@@ -351,56 +329,97 @@ minimap                     0.2_r124      h5bf99c6_4  bioconda
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \begin{frame}[fragile]
-  \frametitle{Conda / Mamba Environments}
-  With Conda/Mamba, we can activate and deactivate environments, which bundle our software. E.\,g. a software stack per workflow to ensure reproducible runs.
-    \pause
-  To generate a new we can run
-  \begin{lstlisting}[language=Bash, style=Shell]
-$ micromamba create @-n@ <environment_name>
-  \end{lstlisting}
-  This will create a new environment with a given name in your home directory. Alternatively, i.\,e. when dealing with file number quotas, you can point the environment to a different filesystem, e.\,g.:
-  \begin{lstlisting}[language=Bash, style=Shell] 
-$ micromamba create \
->  @-p@ /path/to/project/fs/<environment_name>
-   \end{lstlisting}
+	\frametitle{A first Environment for \Snakemake!}
+	\begin{task}
+		Type along!
+	\end{task}
+    \begin{onlyenv}<1|handout:0>
+      We can create a new environment:
+      \begin{lstlisting}[language=Bash, style=Shell]
+$ mamba @create@ ...
+      \end{lstlisting}
+      using the \altverb{create} keyword.
+    \end{onlyenv}
+    \begin{onlyenv}<2|handout:0>
+    	We can create a new environment:
+    	\begin{lstlisting}[language=Bash, style=Shell]
+$ mamba create \
+> ...
+    	\end{lstlisting}
+    	you may write everything in \emph{one} line. The \altverb{\\} breaks a line and \altverb{>} continues it - it is only to fit everything on a slide.
+    \end{onlyenv}
+    \begin{onlyenv}<3|handout:0>
+    	We can create a new environment:
+    	\begin{lstlisting}[language=Bash, style=Shell]
+$ mamba create \
+> @-c@ conda-forge @-c@ bioconda ...
+    	\end{lstlisting}
+    	\altverb{-c} selects a "channel".
+    \end{onlyenv}
+    \begin{onlyenv}<4|handout:0>
+    	We can create a new environment:
+    	\begin{lstlisting}[language=Bash, style=Shell]
+$ mamba create \
+> -c conda-forge -c bioconda \
+> @-n@ snakemake ...
+    	\end{lstlisting}
+    	\altverb{-n} denotes the name of the environment.
+    \end{onlyenv}
+    \begin{onlyenv}<5|handout:0>
+    	We can create a new environment:
+    	\begin{lstlisting}[language=Bash, style=Shell]
+$ mamba create \
+> -c conda-forge -c bioconda \
+> -n snakemake
+> snakemake snakemake-executor-plugin-slurm \
+> snakemake-storage-plugin-fs
+    	\end{lstlisting}
+    	and finally the software list to be installed.
+    \end{onlyenv}
+    \vfill
+    \begin{docs}[What is an \emph{Environment}?]
+    	With Conda/Mamba, we can activate and deactivate "environments". These bundle our software. I.\,e. a software stack per workflow to ensure reproducible runs with specific software versions.
+    \end{docs}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \begin{frame}[fragile]
-  \frametitle{\HandsOn{Creating your own Environment}}
-  Now, create your first environment. We will
-  \begin{itemize}
-  	\item work in the \altverb{snakemake_tutorial} directory with
-  	\item a \textit{named} environment
-  	\item use the downloaded \altverb{environment.yaml} file to define the software stack
-  	\item pre-compile all Python files with the \altverb{--pyc} flag
-  \end{itemize}
-  \begin{lstlisting}[language=Bash, style=Shell,breaklines=true]
-$ micromamba create --pyc -f environment.yaml -n snakemake-tutorial
-  \end{lstlisting}	
+	\frametitle{\HandsOn{Listing Environments}}
+	Over time you will have several environments. (So far, there is one plus the \altverb{base} env.) To list them all, simply run:
+	\begin{lstlisting}[language=Bash, style=Shell]
+$ mamba env list
+	\end{lstlisting}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \begin{frame}[fragile]
-  \frametitle{Listing Environments}
-   Over time you will have several environments. (So far, there is one.) To list them all, simply run:
-  \begin{lstlisting}[language=Bash, style=Shell]
-$ micromamba env list
-  \end{lstlisting}
-\end{frame} 
+	\frametitle{\HandsOn{Activating Environments}}
+	It is time to activate our fresh environment:
+	\begin{lstlisting}[language=Bash, style=Shell]
+$ mamba activate snakemake
+	\end{lstlisting}
+    Your prompt should now feature the name of the environment: \altverb{snakemake}.
+\end{frame}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}[fragile]
-  \frametitle{Creating, Activating, Deactivating Environments}
-  We can create, activate and deactivate environments with
-  \begin{lstlisting}[language=Bash, style=Shell]
-$ micromamba create [other args] -n <environment name>
-$ micromamba activate <environment name>
-$ micromamba deactivate
-  \end{lstlisting}
-   \begin{task}
-   	  Activate the environment you just created!
-   \end{task}
+    \frametitle{\HandsOn{Checking on Installed Software}}
+    \begin{lstlisting}[language=Bash, style=Shell]
+$ (snakemake) mamba list
+    \end{lstlisting}
+     And you should see
+     \begin{lstlisting}[style=Plain]
+snakemake
+snakemake-executor-plugin-slurm
+snakemake-executor-plugin-slurm-jobstep
+snakemake-interface-common
+snakemake-interface-executor-plugins
+snakemake-interface-report-plugins
+snakemake-interface-storage-plugins
+snakemake-minimal
+snakemake-storage-plugin-fs
+     \end{lstlisting}
+     \ldots along with version infos, channel source and hashsums of all the dependencies.
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -422,6 +441,7 @@ env_prompt: '($(basename {default_env})) '
 # instead of
 (/some/long/path/my_env) user@host:directory $
    \end{lstlisting}
+   if you ever need to set up your environment with a path (\altverb{-p}) instead of a name, e.\,g. on systems with a file quota.
 \end{frame}
 
 

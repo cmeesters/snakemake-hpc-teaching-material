@@ -1,0 +1,36 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+\begin{frame}[fragile]
+	\setcounter{handson}{\value{preframe_handson}}
+	\frametitle{\HandsOn{Your first job script}}
+	\vspace{-2em}
+	\begin{minipage}[t][0.32\textheight][t]{1.0\linewidth}
+		\begin{lstlisting}[language=Bash, style=Shell, basicstyle=\scriptsize]
+#!/bin/bash
+			
+#SBATCH -p barnard
+
+srun echo "Hello World from job $SLURM_JOB_ID on node $(hostname)"
+		\end{lstlisting}
+	\end{minipage}\newline
+	\begin{minipage}[t][0.3\textheight][t]{1.0\linewidth}
+		\begin{onlyenv}<1>
+			\begin{task}
+				Save the script as \texttt{hello\_world.sh} and submit it with the following statement:
+			\end{task}
+			\begin{lstlisting}[language=Bash, style=Shell, basicstyle=\footnotesize]
+$ sbatch hello_world.sh
+			\end{lstlisting}
+		\end{onlyenv}
+		\begin{onlyenv}<2>
+			\begin{block}{Important Items and Aspects}
+				\begin{itemize}
+					\item Interpreter directive
+                                        \item Account (on most clusters) necessary
+					\item Job step with \texttt{srun}
+					\item Question: Where is the output?
+				\end{itemize}
+			\end{block}
+		\end{onlyenv}
+	\end{minipage}
+	\vfill
+\end{frame}

@@ -1,18 +1,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Getting your Sample Data}
+{   
+	\usebackgroundtemplate{
+		\vbox to \paperheight{\vfil\hbox to \paperwidth{\hfil\includegraphics[height=.7\paperheight]{transfer/data-transfer-icon.png}\hfil}\vfil}
+	}
+	\frame{
+		\frametitle{Retrieving your Sample Data}
+		\begin{mdframed}[tikzsetting={draw=white,fill=white,fill opacity=0.8,
+				line width=0pt},backgroundcolor=none,leftmargin=0,
+			rightmargin=150,innertopmargin=4pt,roundcorner=10pt]
+			\tableofcontents[currentsection,sections={1-4},hideothersubsections]
+		\end{mdframed}
+	}
+}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-	\frametitle{Outline}
-	\begin{columns}[t]
-		\begin{column}{.5\textwidth}
-            \tableofcontents[sections={1-7},currentsection]
-		\end{column}
-		\begin{column}{.5\textwidth}
-            \tableofcontents[sections={8-15},currentsection]
-		\end{column}
-	\end{columns}
-\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
@@ -32,7 +33,7 @@
 \begin{frame}[fragile]
   \frametitle{\HandsOn{Getting Your Course Material I}}
   We shall copy a few install scripts (which also will download some sample data).\newline
-  Please copy the directory "\texttt{<<course.pathtosetup>>}".\newline
+  Please copy the directory \altverb{<++course.pathtosetup++>}.\newline
   \begin{hint}
   	Remember, to copy an entire directory, you can use:
   	\begin{lstlisting}[language=Bash, style=Shell]
@@ -41,7 +42,7 @@ $ cp -r <path> ~/.
     We assume that you are working in your \altverb{HOME}. Then typing the \textasciitilde{} is not necessary.
   \end{hint}
   \pause
-  Now, change into this directory!  
+  Now, change into the copied directory!  
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 

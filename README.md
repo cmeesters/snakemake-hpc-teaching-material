@@ -65,7 +65,7 @@ Otherwise, create issue reports.
 This repo contains some unique commands:
 
 - `altverb` to include in-line listings code, e.g. `\altverb{filename}` or `\altverb{--flag}`. Use `\texttt{Name}` for project names, so: `\texttt{Snakemake}`, but `\altverb{snakemake --slurm}` to distinguish the project from the software.
-- to include parameters from the config file, use the `\configparam{<name>}` command
+- to include parameters from the config file, use the `<++name++>}` expression, whre "name" can be a part of the config, e.g. `course.pathtosetup`.
 
 ## For Teachers
 

@@ -1,3 +1,5 @@
+#TASK: see below the samtools_sort-rule
+
 rule bwa_map:
     input:
         "data/genome.fa",
@@ -24,3 +26,4 @@ rule samtools_sort:
     shell:
         "samtools sort -T sorted_reads/{wildcards.sample} "
         "-O bam {input} > {output}"
+

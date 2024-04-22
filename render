@@ -111,7 +111,7 @@ def get_pdf_name(filename):
 def run_pdflatex(fname="out.tex", path="."):
     outdir = os.path.realpath(os.path.join(os.getcwd(), "slides"))
 
-    subprocess.call(["pdflatex", "-quiet", fname], cwd=path)
+    subprocess.call(["pdflatex", "-synctex=1", "-interaction=nonstopmode", fname], cwd=path)
     pdfname = get_pdf_name(fname)
     shutil.copy(os.path.join(path, pdfname), os.path.join(outdir, pdfname))
 
@@ -152,12 +152,23 @@ def find_and_replace_sections(boundaries, section_estimate, fname):
                     second_done = lcount + first_done + 1
                     break
 
-    if not (first_done and second_done):
+    if not minitocline and not (first_done and second_done):
         logger.debug("no outline found for %s -> skipping" % fname)
         return
-
+    # first render minitoc
+    if minitocline:
+        lower = max((section_estimate - 2), 1)  # lower boundary not lower than 1
+        upper = min(
+            (section_estimate + 3), boundaries["upper"]
+        )  # upper boundary not higher then upper boundary ;-)
+        sections = f"{lower}-{upper}"
+        lines[minitocline] = (
+            "            \\tableofcontents[currentsection, sections={"
+            + sections
+            + "}, hideothersubsections]"
+            )
     # adapt the two lines with our new boundaries:
-    if first_done and second_done:
+    elif first_done and second_done:
         lines[
             first_done
         ] = "            \\tableofcontents[sections={%d-%d},currentsection]\n" % (
@@ -169,17 +180,6 @@ def find_and_replace_sections(boundaries, section_estimate, fname):
         ] = "            \\tableofcontents[sections={%d-%d},currentsection]\n" % (
             boundaries["second_half_start"],
             boundaries["upper"],
-        )
-    elif minidocline:
-        lower = max((section_estimate - 2), 1)  # lower boundary not lower than 1
-        upper = min(
-            (section_estimate + 3), boundaries["upper"]
-        )  # upper boundary not higher then upper boundary ;-)
-        sections = f"{lower}-{upper}"
-        lines[minitocline] = (
-            "            \\tableofcontents[currentsection, sections={"
-            + sections
-            + "}, hideothersubsections]"
         )
     else:
         logger.error(f"TOC expectations for '{fname}' not met")
