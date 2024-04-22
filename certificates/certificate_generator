@@ -85,7 +85,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    participants = parse_participants(args.exportfile, args.only_name, name_index = args.nindex, surname_index = args.sindex, header=args.has_header)
+    participants = parse_participants(args.exportfile, args.only_name, name_index = args.nindex, surname_index = args.sindex, has_header=args.has_header)
 
     data = yaml.safe_load(Path(args.configfile).read_text())
 
