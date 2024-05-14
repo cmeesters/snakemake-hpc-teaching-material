@@ -3,8 +3,25 @@ instructor:
   affiliation: "Institution Line"
   affiliation2: "2nd Institution line, if wanted" # may be empty
 
+layout:
+  beamertheme: "CambridgeUS" # you can choose any, the slides are tested
+                             # with 'CambridgeUS'
+  colortheme: "beaver"       # you can choose any, the slides are tested with
+                             # 'beaver'
+  # choose any preconfigured color or those from the preamble
+  beamercolor_structure:  "fg=UniRot" 
+  beamercolor_title:      "fg=UniRot"
+  beamercolor_title_head: "fg=UniRot"
+
+  beamercolor_block_title: "bg=UniRot!20,fg=darkred"
+  beamercolor_block_body:  "fg=black, bg=plightgrey2"
+
+  beamercolor_block_title_alerted: "fg=white,bg=UniRot"
+  beamercolor_block_title_example: "fg=white,bg=PineGreen!80"
+  
 course:
   date: "datestring" # maybe: "\today"
+  edition: "edition 4"
   # Editors recommendations are a matter of taste and technological
   # setups (e.g. on-demand setups). Hence, specify an editor-slide,
   #  here:

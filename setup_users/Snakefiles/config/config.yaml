@@ -1,0 +1,6 @@
+samples:
+  A: A.fastq
+  B: B.fastq
+
+bwa_map:
+  rg=r"@RG\tID:{sample}\tSM:{sample}"

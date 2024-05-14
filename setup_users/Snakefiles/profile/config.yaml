@@ -1,0 +1,19 @@
+default-resources:
+  slurm_partition=barnard
+
+set-resources:
+    bwa_map:
+        runtime: 5 # real scenarios will take more
+        mem_mb_per_cpu: 1800
+
+    samtools_sort:
+        runtime: 5
+        mem_mb_per_cpu: 1800
+
+    samtools_index:
+        runtime: 5
+        mem_mb_per_cpu: 1800
+
+    bcftools_call:
+        runtime: 15
+        mem_mb_per_cpu: 1800
