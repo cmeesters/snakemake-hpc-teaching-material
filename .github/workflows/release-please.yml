@@ -13,4 +13,4 @@ jobs:
         id: release
         with:
           release-type: go
-          package-name: <repo>
+          package-name: "snakemake-hpc-teaching-material"
