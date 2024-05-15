@@ -1,6 +1,7 @@
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC_BY--SA_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 [![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/snakemake/snakemake-hpc-teaching-material/build.yml?label=tests)](https://github.com/snakemake/snakemake-hpc-teaching-material/actions?query=branch%3Amain++)
 ![Mastodon Follow](https://img.shields.io/mastodon/follow/109245696038111591?domain=https%3A%2F%2Ffediscience.org&style=flat)
+[![Build LaTex sources.](https://github.com/snakemake/snakemake-hpc-teaching-material/actions/workflows/build.yml/badge.svg)](https://github.com/snakemake/snakemake-hpc-teaching-material/actions/workflows/build.yml)
 
 # The Snakemake Teaching Alliance
 
