@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/snakemake/snakemake-hpc-teaching-material/compare/v1.0.0...v1.0.1) (2024-05-15)
+
+
+### Bug Fixes
+
+* attempt to upload slides, too ([#96](https://github.com/snakemake/snakemake-hpc-teaching-material/issues/96)) ([82c1c07](https://github.com/snakemake/snakemake-hpc-teaching-material/commit/82c1c074946310cce3820844ff138bac3a302e02))
+
 ## 1.0.0 (2024-05-15)
 
 
