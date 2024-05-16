@@ -17,6 +17,7 @@ jobs:
           package-name: "snakemake-hpc-teaching-material"
       - name: Create release
         id: create_release
+        uses: softprops/action-gh-release@v1        
         with:
           draft: false
           prerelease: false
