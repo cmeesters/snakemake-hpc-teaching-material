@@ -1,0 +1,54 @@
+name: Build LaTex sources.
+
+on: 
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v4
+      - name: Install Dependencies
+        run: sudo apt-get install -y python3-yaml 
+             texlive 
+             texlive-fonts-extra 
+             texlive-latex-extra 
+             texlive-luatex 
+             texlive-pictures 
+             texlive-plain-generic 
+             texlive-pstricks 
+             texlive-science 
+             latexmk
+        
+      - name: LaTeX compile  
+        run: |
+          ./render --master-tex Snakemake_HPC_Users.tex --configfile config/config_for_github.yaml ; 
+          ./render --master-tex Snakemake_HPC_Creators.tex --configfile config/config_for_github.yaml
+          ./render --master-tex Snakemake_HPC_User_Creator_Combi.tex --configfile config/config_for_github.yaml
+
+      - name: Upload .pdf File
+        uses: actions/upload-artifact@v3 
+        with:
+          name: Slides
+          path: |
+            slides/*.pdf
+      - name: release
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+          - name: Create release
+            id: create_release
+            uses: softprops/action-gh-release@v1
+            with:
+              #token: ${{ secrets.GITHUB_TOKEN }}
+              name: Release ${{ github.ref_name }}
+              draft: false
+              prerelease: false
+              files: |
+                slides/Snakemake_HPC_Users.pdf
+                slides/Snakemake_HPC_Creators.pdf
+                slides/Snakemake_HPC_User_Creator_Combi.pdf
