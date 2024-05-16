@@ -4,8 +4,8 @@ on: push
 
 jobs:
   build:
-  if: github.event.pull_request.merged == false
-  runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == false
+    runs-on: ubuntu-latest
   
     steps:
       - name: Set up Git repository
