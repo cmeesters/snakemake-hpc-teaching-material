@@ -30,7 +30,6 @@ jobs:
           ./render --master-tex Snakemake_HPC_Creators.tex --configfile config/config_for_github.yaml
           ./render --master-tex Snakemake_HPC_User_Creator_Combi.tex --configfile config/config_for_github.yaml
 
-<<<<<<< HEAD
           #- name: Upload .pdf File
           #uses: actions/upload-artifact@v3 
           #with:
@@ -38,15 +37,7 @@ jobs:
           #path: |
           #  slides/*.pdf
   release:
-=======
-      - name: Upload .pdf File
-        uses: actions/upload-artifact@v3 
-        with:
-          name: Slides
-          path: |
-            slides/*.pdf
       - name: release
->>>>>>> 2a458f61d49c527db9fedac01a1fbe91a5697c63
         needs: build
         runs-on: ubuntu-latest
         steps:
