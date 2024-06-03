@@ -41,19 +41,20 @@ jobs:
           #path: |
           #  slides/*.pdf
   release:
-    - name: release
-      needs: build
-      runs-on: ubuntu-latest
-      steps:
-        - name: Create release
-          id: create_release
-          uses: softprops/action-gh-release@v1
-          with:
-            #token: ${{ secrets.GITHUB_TOKEN }}
-            name: Release ${{ github.ref_name }}
-            draft: false
-            prerelease: false
-            files: |
-              slides/Snakemake_HPC_Users.pdf
-              slides/Snakemake_HPC_Creators.pdf
-              slides/Snakemake_HPC_User_Creator_Combi.pdf
+    steps:
+      - name: release
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+          - name: Create release
+            id: create_release
+            uses: softprops/action-gh-release@v1
+            with:
+              #token: ${{ secrets.GITHUB_TOKEN }}
+              name: Release ${{ github.ref_name }}
+              draft: false
+              prerelease: false
+              files: |
+                slides/Snakemake_HPC_Users.pdf
+                slides/Snakemake_HPC_Creators.pdf
+                slides/Snakemake_HPC_User_Creator_Combi.pdf
