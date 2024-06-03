@@ -1,6 +1,9 @@
 name: Build LaTex sources.
 
-on: push
+on: 
+  push:
+    branches:
+      - main
 
 jobs:
   build:
@@ -27,9 +30,26 @@ jobs:
           ./render --master-tex Snakemake_HPC_Creators.tex --configfile config/config_for_github.yaml
           ./render --master-tex Snakemake_HPC_User_Creator_Combi.tex --configfile config/config_for_github.yaml
 
-      - name: Upload .pdf File
-        uses: actions/upload-artifact@v3 
-        with:
-          name: Slides
-          path: |
-            slides/*.pdf
+          #- name: Upload .pdf File
+          #uses: actions/upload-artifact@v3 
+          #with:
+          #name: Slides
+          #path: |
+          #  slides/*.pdf
+  release:
+      - name: release
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+          - name: Create release
+            id: create_release
+            uses: softprops/action-gh-release@v1
+            with:
+              #token: ${{ secrets.GITHUB_TOKEN }}
+              name: Release ${{ github.ref_name }}
+              draft: false
+              prerelease: false
+              files: |
+                slides/Snakemake_HPC_Users.pdf
+                slides/Snakemake_HPC_Creators.pdf
+                slides/Snakemake_HPC_User_Creator_Combi.pdf
