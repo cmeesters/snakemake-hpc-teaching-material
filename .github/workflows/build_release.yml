@@ -1,5 +1,5 @@
 ---
-name: Build LaTex sources.
+name: Build PDFs and bundle sources.
 
 on:
   push:
@@ -8,11 +8,11 @@ on:
 
 jobs:
   build:
+    name: Release Artifacts
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set up Git repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
       - name: Install Dependencies
         run: sudo apt-get install -y python3-yaml
              texlive
@@ -40,11 +40,8 @@ jobs:
           #name: Slides
           #path: |
           #  slides/*.pdf
-  release:
-    steps:
-      - name: Create release
-        needs: build
-        id: create_release
+      - name: Create a release and upload
+        #needs: build
         runs-on: ubuntu-latest
         uses: softprops/action-gh-release@v1
         with:
