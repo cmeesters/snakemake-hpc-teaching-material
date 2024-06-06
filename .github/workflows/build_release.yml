@@ -45,7 +45,7 @@ jobs:
         #id: create_release
         uses: softprops/action-gh-release@v1
         with:
-          #token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           name: Release ${{ github.ref_name }}
           draft: false
           prerelease: false
