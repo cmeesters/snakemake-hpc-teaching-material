@@ -42,7 +42,6 @@ jobs:
           #  slides/*.pdf
       - name: Create a release and upload
         #needs: build
-        runs-on: ubuntu-latest
         #id: create_release
         uses: softprops/action-gh-release@v1
         with:
