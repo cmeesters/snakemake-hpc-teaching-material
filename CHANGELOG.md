@@ -1,35 +1,5 @@
 # Changelog
 
-## [1.1.0](https://github.com/snakemake/snakemake-hpc-teaching-material/compare/v1.0.1...v1.1.0) (2024-06-10)
-
-
-### Features
-
-* adding testing, mastodon badge and license badge ([#87](https://github.com/snakemake/snakemake-hpc-teaching-material/issues/87)) ([c505e10](https://github.com/snakemake/snakemake-hpc-teaching-material/commit/c505e108bc7cc934b308d534913b8424f7fb06e8))
-
-
-### Bug Fixes
-
-* added missing image ([55211ce](https://github.com/snakemake/snakemake-hpc-teaching-material/commit/55211ce06b708249569053db49f3d21feb70af79))
-* realease artifacts - separate release&build script ([#100](https://github.com/snakemake/snakemake-hpc-teaching-material/issues/100)) ([2a458f6](https://github.com/snakemake/snakemake-hpc-teaching-material/commit/2a458f61d49c527db9fedac01a1fbe91a5697c63))
-* realease artifacts ([#98](https://github.com/snakemake/snakemake-hpc-teaching-material/issues/98)) ([ab0ce3d](https://github.com/snakemake/snakemake-hpc-teaching-material/commit/ab0ce3dc16f93ac758bd606dc335bee3fecfe15c))
-* realease artifacts ([#99](https://github.com/snakemake/snakemake-hpc-teaching-material/issues/99)) ([6f7ab18](https://github.com/snakemake/snakemake-hpc-teaching-material/commit/6f7ab18df329624e369c63985925b4e1169005f4))
-* release artifacts - again ([#101](https://github.com/snakemake/snakemake-hpc-teaching-material/issues/101)) ([0ffeaef](https://github.com/snakemake/snakemake-hpc-teaching-material/commit/0ffeaefa95c8827bb02f4fa43ecb5b94dd61242f))
-* release generator 2 ([#106](https://github.com/snakemake/snakemake-hpc-teaching-material/issues/106)) ([8af0271](https://github.com/snakemake/snakemake-hpc-teaching-material/commit/8af0271cc450773adfaede7b80e9b459bab62621))
-* release generator 2 ([#107](https://github.com/snakemake/snakemake-hpc-teaching-material/issues/107)) ([60ee1e4](https://github.com/snakemake/snakemake-hpc-teaching-material/commit/60ee1e4d3af8b08f62a4f95964eb9663e6af166a))
-* release generator 2 ([#108](https://github.com/snakemake/snakemake-hpc-teaching-material/issues/108)) ([e53fbf7](https://github.com/snakemake/snakemake-hpc-teaching-material/commit/e53fbf7580eebc4409742e9824e915d54cb823d7))
-* release generator 2 ([#109](https://github.com/snakemake/snakemake-hpc-teaching-material/issues/109)) ([d3265c8](https://github.com/snakemake/snakemake-hpc-teaching-material/commit/d3265c8e4fe8cf011decedf7d8cd71d2381c2e28))
-* release generator 2 ([#110](https://github.com/snakemake/snakemake-hpc-teaching-material/issues/110)) ([ac680c1](https://github.com/snakemake/snakemake-hpc-teaching-material/commit/ac680c19fe82d027969dbb273fc70d0900fea8f2))
-* release generator 2 ([#111](https://github.com/snakemake/snakemake-hpc-teaching-material/issues/111)) ([e311fab](https://github.com/snakemake/snakemake-hpc-teaching-material/commit/e311fabe84678259f9901d2c257139997b072109))
-* release generator 2 ([#113](https://github.com/snakemake/snakemake-hpc-teaching-material/issues/113)) ([68148a7](https://github.com/snakemake/snakemake-hpc-teaching-material/commit/68148a7b73192f6683851db47b1a446259223e2f))
-* release generator 2 ([#114](https://github.com/snakemake/snakemake-hpc-teaching-material/issues/114)) ([10ca461](https://github.com/snakemake/snakemake-hpc-teaching-material/commit/10ca461ce95c941ac72f5d049d7fe4dd8af3029f))
-* release generator 2 ([#115](https://github.com/snakemake/snakemake-hpc-teaching-material/issues/115)) ([b7be5fd](https://github.com/snakemake/snakemake-hpc-teaching-material/commit/b7be5fde6c173310257fd40871ad6f9c3be9d9e2))
-* release generator 2 ([#116](https://github.com/snakemake/snakemake-hpc-teaching-material/issues/116)) ([b35a13f](https://github.com/snakemake/snakemake-hpc-teaching-material/commit/b35a13f65ad2ec41b4ec346f552d7adabbaf2887))
-* release generator 3 ([#118](https://github.com/snakemake/snakemake-hpc-teaching-material/issues/118)) ([05c7f9e](https://github.com/snakemake/snakemake-hpc-teaching-material/commit/05c7f9eeb797866f41c66629295e6d6048420695))
-* release generator 3 ([#119](https://github.com/snakemake/snakemake-hpc-teaching-material/issues/119)) ([63c2b7a](https://github.com/snakemake/snakemake-hpc-teaching-material/commit/63c2b7abc8713ff6d24c8ac7896c8a1550fd347b))
-* release generator 3 ([#120](https://github.com/snakemake/snakemake-hpc-teaching-material/issues/120)) ([1086137](https://github.com/snakemake/snakemake-hpc-teaching-material/commit/10861373080bdb6d91f73f6c900d6728e6616be8))
-* release generator 3 ([#121](https://github.com/snakemake/snakemake-hpc-teaching-material/issues/121)) ([d96f040](https://github.com/snakemake/snakemake-hpc-teaching-material/commit/d96f040702771d195279e21681fc7f4b1e3908d2))
-
 ## [1.0.1](https://github.com/snakemake/snakemake-hpc-teaching-material/compare/v1.0.0...v1.0.1) (2024-05-15)
 
 
