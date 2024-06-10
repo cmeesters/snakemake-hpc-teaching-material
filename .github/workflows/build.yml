@@ -1,7 +1,9 @@
 name: Build LaTex sources.
 
-on: push
-
+on: 
+  push:
+    paths:
+      '**.tex'
 jobs:
   build:
     if: github.event.pull_request.merged == false
