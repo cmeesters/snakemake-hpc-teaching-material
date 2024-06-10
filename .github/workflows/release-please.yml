@@ -44,10 +44,9 @@ jobs:
       - name: Upload Release Artifacts
         if: ${{ steps.release.outputs.release_created }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}        with:
-        run: | 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
             gh realease upload ${{ steps.release.outputs.tag_name }}
             slides/Snakemake_HPC_Users.pdf
             slides/Snakemake_HPC_Creators.pdf
             slides/Snakemake_HPC_User_Creator_Combi.pdf
-
