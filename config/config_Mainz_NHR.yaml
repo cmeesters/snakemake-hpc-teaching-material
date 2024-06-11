@@ -21,7 +21,6 @@ layout:
 
 course:
   date: "datestring" # maybe: "\today"
-  edition: "edition 4"
   # Editors recommendations are a matter of taste and technological
   # setups (e.g. on-demand setups). Hence, specify an editor-slide,
   #  here:

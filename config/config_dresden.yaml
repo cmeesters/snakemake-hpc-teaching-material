@@ -5,7 +5,6 @@ instructor:
 
 course:
   date: "18. April 2024" # maybe: "\today"
-  edition: "condensed - edition 1"
   # Editors recommendations are a matter of taste and technological
   # setups (e.g. on-demand setups). Hence, specify an editor-slide,
   #  here:
