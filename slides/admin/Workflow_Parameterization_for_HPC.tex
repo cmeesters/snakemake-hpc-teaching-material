@@ -1,0 +1,258 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Parametizing your Workflow - II}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{Outline}
+    \begin{columns}[t]
+        \begin{column}{.5\textwidth}
+            \tableofcontents[sections={1-7},currentsection]
+        \end{column}
+        \begin{column}{.5\textwidth}
+            \tableofcontents[sections={8-15},currentsection]
+        \end{column}
+    \end{columns}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{What is this about?}
+  \begin{question}[Questions]
+   	\begin{itemize}
+      \item How do we avoid I/O contention?
+      \item How do we account for file system latency?
+    \end{itemize}
+  \end{question}
+   \begin{docs}[Objectives]
+   	 \begin{enumerate} 
+        \item Learn how to tune \Snakemake{} to mitigate I/O contention.
+        \item Learn how to configure \Snakemake{} to allow for file system latency.
+    \end{enumerate}
+  \end{docs}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+	\frametitle{\Interlude{What is Random Access?}}
+	\vspace{-1.5em}
+	\begin{figure}
+		\centering
+		\begin{tikzpicture}
+			\node[name=sa] at (3.5,10) { \lhref{https://en.wikipedia.org/wiki/Random_access}{Sequential Access} };
+			\foreach[count=\y from 2] \x in {1,...,11}{
+				\draw[thick,black,midway,draw] (\x,8.75) rectangle node[name=s\x] {} (\y,8.25);
+			}       
+			\foreach[count=\y from 2] \x in  {1, ..., 10} {
+					\path[->] ([yshift=.6em]s\x.north west) edge[bend left=30] ([yshift=.6em]s\y.north west);
+			}
+			%         \path[->] ([yshift=.6em]s1.north) edge [bend left=30] ([yshift=.6em]s2.north) ;
+			
+			\node[name=ra] at (3.5,7) { Random Access };
+			\foreach[count=\y from 2] \x in {1,...,11}{
+				\draw[thick,black,midway,draw] (\x,5.75) rectangle node[name=r\x] {} (\y,5.25);
+			}
+		
+			\path[->] ([yshift=.6em]r1.north) edge [bend left=30] ([yshift=.6em]r5.north) ;
+			\path[->] ([yshift=.6em]r5.north) edge [bend right=60] ([yshift=.6em]r2.north) ;
+			\path[->] ([yshift=.6em]r2.north) edge [bend left=30] ([yshift=.6em]r3.north) ;
+			\path[->] ([yshift=.6em]r3.north) edge [bend left=30] ([yshift=.6em]r11.north) ;
+			\path[->] ([yshift=.6em]r11.north) edge [bend right=30] ([yshift=.6em]r7.north) ;
+			\path[->] ([yshift=.6em]r7.north) edge [bend right=30] ([yshift=.6em]r6.north) ;
+			\path[->] ([yshift=.6em]r6.north) edge [bend left=60] ([yshift=.6em]r8.north) ;
+			\path[->] ([yshift=.6em]r8.north) edge [bend right=50] ([yshift=.6em]r4.north) ;
+		\end{tikzpicture}
+	\end{figure}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+	\frametitle{\Interlude{What is Random Access?}}
+	\begin{question}
+	  \begin{itemize}
+	  	\item What causes Random Access?
+	  	\item Why is it harmful? What can we do?
+	  \end{itemize}
+    \end{question}
+	\pause
+	\begin{columns}[t]
+	  \begin{column}{0.5\textwidth}
+	  	Causes:
+	  	\hrule
+	  	\begin{itemize}
+	  	  \item a number of (threaded) apps accessing the same file space (e.g. reference data)
+	  	  \item a number of apps accessing a file space exceeding the file system cache size
+	  	\end{itemize}
+  	     Will slow parallel file systems and your data analysis!
+	  \end{column}
+      \begin{column}{0.5\textwidth}
+      	Remedies:
+      	\hrule
+      	\begin{itemize}
+      		\item copy data to/from compute nodes equipped with SSD
+      		\item use a RAM disk (RAM = random access memory) - which many clusters provide
+      	\end{itemize}
+      \end{column}
+	\end{columns}	
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{\Interlude{What is File System Latency?}}
+    \centering
+	\begin{tikzpicture}[line cap=rect,line width=3pt, 
+		datastore/.style={draw, rounded rectangle, rounded rectangle east arc=concave, rounded rectangle arc length=150},
+		]
+	  \tikzstyle{storage} = [rectangle, minimum width=3cm, minimum height=1cm, text width=3cm, text centered, draw=black]
+	  
+	  \filldraw [fill=cyan] (0,0) circle [radius=1cm];
+	  \foreach \angle [count=\xi] in {60,30,...,-270}
+	  {
+		\draw[line width=0.5pt] (\angle:0.9cm) -- (\angle:1cm);
+		\node[font=\small] at (\angle:0.68cm) {\textsf{\xi}};
+	  }
+	  \foreach \angle in {0,90,180,270}
+	  \draw[line width=1pt] (\angle:0.8cm) -- (\angle:1cm);
+	  \draw (0,0) -- (120:0.4cm);
+	  \draw (0,0) -- (90:.5cm);
+	  
+	  \node (sto1) [datastore] at (-4, 0) {Storage};
+	  \node at (4, 0) {\includegraphics[width=.25\textwidth]{misc/data_center.png}};
+  \end{tikzpicture}
+  \begin{docs}{File System Latency}
+  	The time it takes from the file system to the client and back.
+  \end{docs}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{\Interlude{What is File System Latency? II}}
+  \begin{docs}{Background}
+  	Some clusters use NFS (Network File System). There, file system latency \emph{can} be an issue.\newline
+  	\pause
+  	On parallel file systems, the latency usually is very low. 
+  \end{docs}	
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Global Workflow Configuration}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{\Snakemake{} Profiles}
+  \begin{hint}
+  	Profiles can shorten your command lines and be an easy remedy for the described issues!
+  \end{hint}
+  \pause
+  Two kinds of profiles are supported:
+  \begin{itemize}[<+->]
+  	\item A global profile that is defined in a system-wide or user-specific configuration directory (on Linux, this will be \altverb{\~/.config/snakemake} and \altverb{/etc/xdg/snakemake}, you can find the answer for your system via \altverb{snakemake --help}).
+  	\item A workflow specific profile that is defined via a flag (\altverb{--workflow-profile}) or searched in a default location (profile/default) in the working directory or next to the \altverb{Snakefile}.
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{Your Profile}
+    \begin{onlyenv}<1| handout:0>
+      Our first line forces the use of the \lhref{https://yte-template-engine.github.io/}{\bf{Y}AML \bf{T}emplate \bf{E}ngine} to parse the following lines accordingly.
+      \begin{lstlisting}[language=Bash, style=Shell]
+__use_yte__: true  	 
+      \end{lstlisting}
+    \end{onlyenv}
+    \begin{onlyenv}<2| handout:0>
+      Now, our default executor is SLURM.
+      \begin{lstlisting}[language=Bash, style=Shell]
+__use_yte__: true
+executor: slurm
+     \end{lstlisting}
+     No more, \altverb{snakemake --executor slurm ...}!
+   \end{onlyenv}
+   \begin{onlyenv}<3| handout:0>
+   	 The next line tells Snakemake to wait for a minute, if output files are not present. This is more than enough time, even for NFS-Filesystems. 
+   	 \begin{lstlisting}[language=Bash, style=Shell]
+__use_yte__: true
+executor: slurm
+latency-wait: 60
+   	 \end{lstlisting}
+    \end{onlyenv}
+    \begin{onlyenv}<4| handout:0>
+      The entire rest, will tell the storage plugin (\altverb{snakemake-storage-plugin-fs}) to stage in to the node-local storage on Mogon, for \emph{every} job and to copy back your results. When dealing with I/O intensive jobs, this can boost your performance tremendously. 
+      \begin{lstlisting}[language=Bash, style=Shell]
+__use_yte__: true
+executor: slurm
+latency-wait: 60
+default-storage-provider: fs
+shared-fs-usage:
+  - persistence
+  - sources
+  - source-cache
+local-storage-prefix: /localscratch/$SLURM_JOB_ID
+    \end{lstlisting}
+   \end{onlyenv}
+  \begin{onlyenv}<5| handout:0>
+  	%TODO remove this part, once the snakemake release is ready
+  	\begin{warning}
+  	  Currently, we are working on way to annotate susceptible I/O pattern, the highlighted parts are not yet functional.
+  	\end{warning}
+  	%You may copy this setup from \texttt{<++course.pathtosetup++>/config.yaml} to the \altverb{\~/.config/snakemake}-folder - unless your local admins provide a cluster-wide configuration.
+  	\begin{lstlisting}[language=Bash, style=Shell]
+__use_yte__: true
+executor: slurm
+@latency-wait: 60@
+@default-storage-provider: fs@
+@shared-fs-usage:@
+@  - persistence@
+@  - sources@
+@  - source-cache@
+@local-storage-prefix: /localscratch/$SLURM_JOB_ID@
+  	 \end{lstlisting}
+  \end{onlyenv}
+   \begin{onlyenv}<6| handout:1>
+   	The complete configuration out to be in \altverb{\~/.config/snakemake/config.yaml}
+   	\begin{lstlisting}[language=Bash, style=Shell]
+__use_yte__: true
+executor: slurm
+latency-wait: 60
+default-storage-provider: fs
+shared-fs-usage:
+- persistence
+- sources
+- source-cache
+local-storage-prefix: /localscratch/$SLURM_JOB_ID
+    \end{lstlisting}
+  \end{onlyenv}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+	\frametitle{\HandsOn{Running with a Profile I}}
+	Enter 
+	\begin{lstlisting}[language=Bash, style=Shell]
+export SNAKEMAKE_PROFILE="$HOME/.config/snakemake"
+    \end{lstlisting}
+	in your \altverb{.bashrc}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[fragile]
+	\frametitle{\HandsOn{Running with a Profile II}}
+	Copy the configuration file:
+	\begin{lstlisting}[language=Bash, style=Shell]
+$ mkdir -p ~/.config/snakemake
+$ cp ~/workflows/config.yaml \
+> ~/.config/snakemake/.
+	\end{lstlisting}
+    Activate the new settings:
+    \begin{lstlisting}[language=Bash, style=Shell]
+$ source ~/.bashrc
+    \end{lstlisting}
+    And run the workflow - just for fun:
+    \begin{lstlisting}[language=Bash, style=Shell]
+$ snakemake -F # just this one flag!
+    \end{lstlisting}
+\end{frame}
+
+	
+
