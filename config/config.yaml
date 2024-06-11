@@ -20,6 +20,8 @@ layout:
   beamercolor_block_title_example: "fg=white,bg=PineGreen!80"
   
 course:
+  title: "An Introduction to HPC-conformant Scientific Workflows with \Snakemake"
+  subtitle: "Programming Workflows" # or: "Adapting Workflows" or: "Intro for Admins"
   date: "datestring" # maybe: "\today"
   # Editors recommendations are a matter of taste and technological
   # setups (e.g. on-demand setups). Hence, specify an editor-slide,
