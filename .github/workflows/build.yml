@@ -30,7 +30,7 @@ jobs:
           ./render --master-tex Snakemake_HPC_User_Creator_Combi.tex --configfile config/config_for_github.yaml
 
       - name: Upload .pdf File
-        uses: actions/upload-artifact@v3 
+        uses: actions/upload-artifact@v4
         with:
           name: Slides
           path: |
