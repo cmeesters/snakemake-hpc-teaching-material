@@ -13,7 +13,7 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v4
       - name: Install Dependencies
-        run: sudo apt-get install -y python3-yaml 
+        run: sudo apt-get install --fix-missing -y python3-yaml 
              texlive 
              texlive-fonts-extra 
              texlive-latex-extra 
