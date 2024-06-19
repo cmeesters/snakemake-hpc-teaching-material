@@ -32,6 +32,8 @@ jobs:
           --configfile config/config_for_github.yaml;
           ./render --master-tex Snakemake_HPC_User_Creator_Combi.tex \
           --configfile config/config_for_github.yaml
+          ./render --master-tex Snakemake_HPC_Admins.tex \
+          --configfile config/config_for_github.yaml
   release-please:
     runs-on: ubuntu-latest
     needs: build
@@ -50,3 +52,4 @@ jobs:
             slides/Snakemake_HPC_Users.pdf
             slides/Snakemake_HPC_Creators.pdf
             slides/Snakemake_HPC_User_Creator_Combi.pdf
+            slides/Snakemake_HPC_Admins.pdf
