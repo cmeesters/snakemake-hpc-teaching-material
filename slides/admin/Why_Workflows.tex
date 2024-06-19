@@ -70,10 +70,14 @@
   \frametitle{Let them learn! Really?}
   \bcinfo First of all: new users have to learn things - including the batch system.
   \pause
+  \begin{question}[When do new users apply for HPC time?]
+  	\pause With BIG DATA - or HUGE SIMULATIONS - not for anything else!
+  \end{question}
+  \pause
   \begin{question}[What do users expect to analyze their data?]
   	\begin{itemize}[<+->]
   		\item all necessary software -- no install hiccups
-  		\item to \emph{just} calculate -- no complaints about IO problems or the like
+  		\item to \emph{just} calculate -- no complaints about IO issues or the like
   		\item to get their results \emph{fast} -- after all, it's an HPC system!
   	\end{itemize}
   \end{question}
@@ -185,55 +189,4 @@
       \end{figure}
   \end{onlyenv}
   \footnotesize{\lhref{https://doi.org/10.12688/f1000research.29032.2}{From the official \Snakemake-paper.}}
-\end{frame}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Goals, Background \& Outline}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-  \frametitle{Questions}
-  \begin{question}[The questions you most probably have when starting your Analysis:]
-  	\begin{itemize}
-      \item How to start quickly (with the lowest amount of overhead)?
-      \item What are the necessary tools?
-    \end{itemize}
-  \end{question}
-                                                                               
-  \begin{question}[Our question to you:]
-  	 How do you get this information? And: Is reproducibility and sustainability your concern?
-  \end{question}
-  \pause
-  \begin{block}{Most frequent Sources}
-   \begin{itemize}
-    \item Your labmate(s)
-    \item The Internet
-    \item Yes, of course ... eventually, when I brag about my paper/thesis.
-   \end{itemize}
-  \end{block}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-  \frametitle{The Workflow Approach}
-  Workflow Engines answer these questions directly by providing
-  \begin{itemize}
-   \item entire Workflows can be selected and can be put to action.
-   \item executing routines reliably.
-  \end{itemize}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-  \frametitle{Going HPC}
-  \begin{question}
-  	Why would you want to work on a cluster?
-  \end{question}
-  \pause
-  Answers may include:
-  \begin{itemize}[<+->]
-   \item compute power and ressources for big data
-   \item launching scalable (and otherwise portable) workflows with workflow engines
-  \end{itemize}
 \end{frame}
