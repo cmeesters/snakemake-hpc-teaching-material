@@ -79,7 +79,7 @@
 	\begin{columns}
 		\begin{column}{0.5\textwidth}
 			\begin{itemize}[<+->]
-				\item Extremely feature rich: \lhref{https://snakemake.github.io/snakemake-workflow-catalog/}{over 1800 workflows}
+				\item Extremely feature rich: \lhref{https://snakemake.github.io/snakemake-workflow-catalog/}{over 1800 workflows (mostly bioinformatics)}
 				\item Almost a hundred standardized workflows ready to use (meaning: well documented and with automatic deployment)
 				\item Cluster batch systems are supported (and support for various cloud systems, too)
 				\item There is an option to include Nextflow wrappers, too.
@@ -88,6 +88,7 @@
 		\begin{column}{0.5\textwidth}
 			\begin{figure}
 				\includegraphics[width=\textwidth]{Snakemake/Snakemake_Workflow_Catalog.png}
+				\vspace{0.5em}
 				\caption*{Screenshot of the Workflow Catalogue}
 			\end{figure}
 		\end{column}
@@ -107,10 +108,11 @@
 				\begin{lstlisting}[language=Bash, style=Shell]
 $ snakemake [<arguments>]
 				\end{lstlisting} 
-			    \item you will fill in the parameters of your workflow (in a file)
-			    \item Snakemake will run on the login-node and spawn your jobs on the cluster 
+			    \item users need to fill in the parameters of their workflow (e.\,g. input path(s) in a file)
+			    \item Snakemake will run on the login-node and spawn your jobs on the cluster using a
+			    \item cluster specific configuration file 
 			\end{itemize}
-			
+			It is capable to remove temporary files and support various archiving systems.
 		\end{column}
 		\begin{column}{.5\textwidth}
 			\only<3>{\includegraphics[width=0.95\textwidth]{misc/cluster_scheme.png}}
