@@ -124,21 +124,16 @@ $ snakemake [<arguments>]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}<handout:0>
   \frametitle{"Spawn Jobs on a Cluster?!" - What does it mean?}
-  \centering
-  \begin{tabular}{m{0.1\textwidth} m{0.25\textwidth} m{0.2\textwidth} m{0.45\textwidth}}
-PC: & \includegraphics[width=0.1\textwidth]{misc/pc_color.png}  	    &  \includegraphics[width=0.2\textwidth]{misc/sequential_code.png} &  \begin{minipage}{0.45\textwidth}
-	$\Rightarrow$ sequential code \newline
-	(perhaps parallel)
-\end{minipage} \\ \pause
- 	
-Server: & \includegraphics[width=0.15\textwidth]{misc/homeserver.png}  	&  \includegraphics[width=0.2\textwidth]{misc/concurrent.pdf} & \begin{minipage}{0.45\textwidth}
-	$\Rightarrow$ sequential code \newline(perhaps parallel), \newline some concurrency
-	\end{minipage}\\ \pause
-  	
-Cluster: & \includegraphics[width=0.15\textwidth]{misc/data_center.png}  	&  \includegraphics[width=0.2\textwidth]{misc/high_concurrent.pdf} & \begin{minipage}{0.45\textwidth}
-	$\Rightarrow$ programs launched \newline with high parallelism, \newline high concurreny
-	\end{minipage}\\
-  \end{tabular}
+  \begin{hint}
+  	Here, we explain to users the difference between PC and Servers and HPC Systems. You will get the Admin background, only.
+  \end{hint}
+  \pause
+  \begin{itemize}[<+->]
+  	\item \Snakemake is triggered on a login-node, only.
+  	\item It will submit jobs \ldots
+  	\item \ldots and keeps running (without CPU load!) to monitor the job execution.
+  	\item depending on the workflow, it will download or plot with minor CPU load on the login node. (Hard to notice with a simple \verb*|top| command.)
+  \end{itemize}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
