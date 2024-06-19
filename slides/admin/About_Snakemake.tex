@@ -103,6 +103,9 @@
 	\frametitle{How does \Snakemake on a Cluster work?}
 	\begin{columns}[T]
 		\begin{column}{.5\textwidth}
+			\only<3->{\includegraphics[width=0.95\textwidth]{misc/cluster_scheme.png}}
+		\end{column}
+		\begin{column}{.5\textwidth}
 			\begin{itemize}[<+->]
 				\item Snakemake is triggered on the command line:
 				\begin{lstlisting}[language=Bash, style=Shell]
@@ -114,9 +117,6 @@ $ snakemake [<arguments>]
 			\end{itemize}
 		    \pause
 			It is capable to remove temporary files and support various archiving systems.
-		\end{column}
-		\begin{column}{.5\textwidth}
-			\only<3->{\includegraphics[width=0.95\textwidth]{misc/cluster_scheme.png}}
 		\end{column}
 	\end{columns}
 \end{frame}
