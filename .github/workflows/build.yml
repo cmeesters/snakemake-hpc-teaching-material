@@ -31,7 +31,7 @@ jobs:
           ./render --master-tex Snakemake_HPC_Users.tex --configfile config/config_for_github.yaml ; 
           ./render --master-tex Snakemake_HPC_Creators.tex --configfile config/config_for_github.yaml ;
           ./render --master-tex Snakemake_HPC_User_Creator_Combi.tex --configfile config/config_for_github.yaml ;
-          ./render --master-tex Snakemake_HPC_User_Admins.tex --configfile config/config_for_github.yaml ;
+          ./render --master-tex Snakemake_HPC_Admins.tex --configfile config/config_for_github.yaml ;
 
       - name: Upload .pdf File
         uses: actions/upload-artifact@v3 
