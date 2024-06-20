@@ -19,9 +19,8 @@
   \frametitle{What is this about?}
    \begin{question}[Questions]
    	 \begin{itemize}
-        \item I can code everything! Can I?
-        \item What is the benefit of a workflow system?
-        \item What distinguishes a workflow system from a ``pipeline''?
+        \item Reproducible Computing? Do I need to care?
+        \item Better Service by supporting Workflow Systems? 
      \end{itemize}
    \end{question}
    \begin{docs}[Objectives]
@@ -62,6 +61,33 @@
     \end{tikzpicture}
   \end{onlyenv}
 \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+	\frametitle{Data Analysis - Using a Batch System???}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\begin{tikzpicture}
+				\path[use as bounding box] (0.7,0) rectangle (12,8);
+				\node[inner sep=0pt] (analysis_full) at (2,6)
+				{\includegraphics[width=0.7\textwidth]{Snakemake/analysis_full.png}}; 
+			\end{tikzpicture}
+		\end{column}
+	    \begin{column}{0.5\textwidth}
+	    A workflow with 1 shepherd, 11 jobs scripts (for multiple, concurrent execution, incl. dependency handling) was coded by one student:
+	    \begin{itemize}[<+->]
+	    	\item ca. 4400 lines of Bash
+	    	\item 1 Perl script: 240 lines
+	    	\item 1 Python script: 57 lines
+	    \end{itemize}
+        \pause
+	    \begin{question}
+	    	How portable is this? How maintainable? How many people are able to accomplish this?
+	    \end{question}	
+	    \end{column}	
+	\end{columns}
+	
+\end{frame}	
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
