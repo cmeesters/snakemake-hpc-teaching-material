@@ -70,24 +70,34 @@
 		\begin{column}{0.5\textwidth}
 			\begin{tikzpicture}
 				\path[use as bounding box] (0.7,0) rectangle (12,8);
-				\node[inner sep=0pt] (analysis_full) at (2,6)
+				\node[inner sep=0pt] (analysis_full) at (4,6)
 				{\includegraphics[width=0.7\textwidth]{Snakemake/analysis_full.png}}; 
 			\end{tikzpicture}
 		\end{column}
 	    \begin{column}{0.5\textwidth}
-	    A workflow with 1 shepherd, 11 jobs scripts (for multiple, concurrent execution, incl. dependency handling) was coded by one student:
+	    A workflow with 1 shepherd (master), 11 jobs scripts (for multiple, concurrent execution, incl. dependency handling) was coded by one student:
 	    \begin{itemize}[<+->]
 	    	\item ca. 4400 lines of Bash
 	    	\item 1 Perl script: 240 lines
 	    	\item 1 Python script: 57 lines
 	    \end{itemize}
-        \pause
-	    \begin{question}
-	    	How portable is this? How maintainable? How many people are able to accomplish this?
-	    \end{question}	
+      
 	    \end{column}	
 	\end{columns}
-	
+	\vspace{-12.5em}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			  \pause
+			\begin{question}
+				How portable is this? How maintainable? How many people are able to accomplish this?\\\pause\hline\vspace{0.5em}
+				
+				Which conclusions will your users in need of complex analysis steps draw?
+			\end{question}	
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			%empty
+		\end{column}
+	\end{columns}
 \end{frame}	
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
