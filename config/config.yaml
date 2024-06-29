@@ -20,8 +20,9 @@ layout:
   beamercolor_block_title_example: "fg=white,bg=PineGreen!80"
   
 course:
+  #title: "" # specifiy your title here, else a default is used. 
+  #subtitle: "" # specifiy your subtitle here, else a default is used. 
   date: "datestring" # maybe: "\today"
-  edition: "edition 4"
   # Editors recommendations are a matter of taste and technological
   # setups (e.g. on-demand setups). Hence, specify an editor-slide,
   #  here:

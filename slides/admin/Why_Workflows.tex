@@ -19,8 +19,8 @@
   \frametitle{What is this about?}
    \begin{question}[Questions]
    	 \begin{itemize}
-        \item I can code everything! Can I?
-        \item What is the benefit of a workflow system?
+        \item Let them learn the batch system! Really?
+        \item What is the benefit of a workflow system for admins?
         \item What distinguishes a workflow system from a ``pipeline''?
      \end{itemize}
    \end{question}
@@ -63,21 +63,93 @@
   \end{onlyenv}
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-  \frametitle{Goals of Reproducibility}
-  \Huge
-  \begin{enumerate}
-   \item Dispel Doubts
-   \item Facilitate Further Experimentation
-  \end{enumerate}
-  \vfill
-  \footnotesize{Idea from \lhref{https://elephly.net/downies/2023-dfn-slides.pdf}{DFN slides}.}
-\end{frame}
+%TODO Here, I (CM) wanted to introcue a slide with a DAG 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-  \frametitle{Reproducible Data Analysis}
+	\frametitle{Data Analysis - Using a Batch System???}
+	\vspace{-2em}
+	\begin{columns}[onlywidth,T]
+		\begin{column}{0.5\textwidth}
+			\begin{tikzpicture}
+				\path[use as bounding box] (0.7,0) rectangle (12,8);
+				\node[inner sep=0pt] (analysis_full) at (4,6)
+				{\includegraphics[width=0.7\textwidth]{Snakemake/analysis_full.png}}; 
+			\end{tikzpicture}
+		\end{column}
+	    \begin{column}{0.5\textwidth}
+	    	\vspace{1em}
+	    A workflow with 1 shepherd (master), 11 jobs scripts (for multiple, concurrent execution, incl. dependency handling) was coded by one student:
+	    \includegraphics[width=\textwidth]{workflows/SLURM_workflow_solution.png}
+	    \end{column}	
+	\end{columns}
+	\vspace{-12.5em}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			  \pause
+			\begin{question}
+				How portable is this? How maintainable? How many people are able to accomplish this?\\\pause\hline\vspace{0.5em}
+				
+				Which conclusions will your users in need of complex analysis steps draw?
+			\end{question}	
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			%empty
+		\end{column}
+	\end{columns}
+\end{frame}	
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Let them learn! Really?}
+  \bcinfo Contemplate \ldots
+  \pause
+  \begin{question}[When do new users apply for HPC time?]
+  	\pause With BIG DATA - or HUGE SIMULATIONS - not for anything else!
+  \end{question}
+  \pause
+  \begin{question}[What do users expect to analyze their data?]
+  	\begin{itemize}[<+->]
+  		\item all necessary software -- no install hiccups
+  		\item to \emph{just} calculate -- no complaints about IO issues or the like
+  		\item to get their results \emph{fast} -- after all, it's an HPC system!
+  	\end{itemize}
+  \end{question}
+  \pause
+  \begin{question}[What will users think, if their expectations aren't met?]
+  	\begin{itemize}[<+->]
+  		\item what a workload compared to "my server"??
+  		\item what a workload to get here (bureaucracy) and now this??
+  		\item abandon HPC!
+  	\end{itemize}
+  \end{question}	
+\end{frame}	
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Let them learn! Really? - II}
+  \begin{question}[How do users plan?]
+	\begin{itemize}[<+->]
+		\item is data management accounted for?
+		\item are their jobs always (well enough) parameterized?
+		\item where do get they their infos from? The "internet"? A labmate? A PI?
+	\end{itemize}	
+  \end{question}
+  \pause
+  \begin{question}[How do you meet expectations?]
+    \begin{itemize}[<+->]
+      \item software provisioning schemes
+      \item data management support
+      \item curated workflows
+      \item every item feasible to which extend? With your manpower?
+    \end{itemize}
+  \end{question}
+\end{frame}	
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{Reproducible Data Analysis in an OpenScience World}
   \begin{onlyenv}<1| handout:0>
     \begin{tikzpicture}
       \path[use as bounding box] (0.7,0) rectangle (12,8);
@@ -119,83 +191,3 @@
   \end{onlyenv}
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-  \frametitle{Beyond Reproducibility}
-  \begin{onlyenv}<1| handout:0>
-    \begin{figure}
-      \centering
-      \includegraphics[width=0.85\textwidth]{Snakemake/reproducibility_only.png}
-    \end{figure}
-  \end{onlyenv}
-  \begin{onlyenv}<2| handout:0>
-    \begin{figure}
-      \centering
-      \includegraphics[width=0.85\textwidth]{Snakemake/reproducibility_empty.png}
-    \end{figure}
-  \end{onlyenv}
-  \begin{onlyenv}<3| handout:0>
-    \begin{figure}
-      \centering
-      \includegraphics[width=0.85\textwidth]{Snakemake/reproducibility_left.png}
-    \end{figure}
-  \end{onlyenv}
-    \begin{onlyenv}<4| handout:1>
-      \begin{figure}
-        \centering
-        \includegraphics[width=0.85\textwidth]{Snakemake/reproducibility_full.png}
-      \end{figure}
-  \end{onlyenv}
-  \footnotesize{\lhref{https://doi.org/10.12688/f1000research.29032.2}{From the official \Snakemake-paper.}}
-\end{frame}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Goals, Background \& Outline}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-  \frametitle{Questions}
-  \begin{question}[The questions you most probably have when starting your Analysis:]
-  	\begin{itemize}
-      \item How to start quickly (with the lowest amount of overhead)?
-      \item What are the necessary tools?
-    \end{itemize}
-  \end{question}
-                                                                               
-  \begin{question}[Our question to you:]
-  	 How do you get this information? And: Is reproducibility and sustainability your concern?
-  \end{question}
-  \pause
-  \begin{block}{Most frequent Sources}
-   \begin{itemize}
-    \item Your labmate(s)
-    \item The Internet
-    \item Yes, of course ... eventually, when I brag about my paper/thesis.
-   \end{itemize}
-  \end{block}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-  \frametitle{The Workflow Approach}
-  Workflow Engines answer these questions directly by providing
-  \begin{itemize}
-   \item entire Workflows can be selected and can be put to action.
-   \item executing routines reliably.
-  \end{itemize}
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-  \frametitle{Going HPC}
-  \begin{question}
-  	Why would you want to work on a cluster?
-  \end{question}
-  \pause
-  Answers may include:
-  \begin{itemize}[<+->]
-   \item compute power and ressources for big data
-   \item launching scalable (and otherwise portable) workflows with workflow engines
-  \end{itemize}
-\end{frame}

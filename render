@@ -33,6 +33,13 @@ PATH = os.path.split(os.path.realpath(__file__))[0]
 
 jinja_env = Environment(loader=FileSystemLoader(PATH), **options)
 
+def edition_from_tag():
+    """
+    sets the edition from the latests tag
+    this assumes that the tag is the set per release
+    """
+    cmd = "git tag -l | tail -1"
+    return subprocess.getoutput(cmd)
 
 def screen_master(masterdoc, tempdir):
     prefix = os.path.join(tempdir, "slides")
@@ -222,12 +229,16 @@ if __name__ == "__main__":
 
     data = parse_config(args.configfile)
 
+    # setting the edition automatically:
+    data["course"]["edition"] = edition_from_tag()
+
     with TemporaryDirectory() as tempdir:
         shutil.copytree("images", os.path.join(tempdir, "images"))
         # creating 'slides' directory (does not exist, yet):
         Path(os.path.join(tempdir, "slides", "common")).mkdir(parents=True)
         Path(os.path.join(tempdir, "slides", "users")).mkdir()
         Path(os.path.join(tempdir, "slides", "creators")).mkdir()
+        Path(os.path.join(tempdir, "slides", "admin")).mkdir()
         for root, dirs, files in os.walk("slides"):
             for fname in files:
                 if not fname.endswith(".tex"):

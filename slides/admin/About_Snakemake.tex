@@ -19,14 +19,14 @@
 	\frametitle{What is this about?}
 	\begin{question}[Questions]
 		\begin{itemize}
-			\item Why \Snakemake?
-			\item Why not "Something Else"?
-			\item Why Clusters?
+			\item What is \Snakemake?
+			\item How does it work on a Cluster?
+			\item What about other Workflow Management Systems?
 		\end{itemize}
 	\end{question}
 	\begin{docs}[Objectives]
 		\begin{enumerate}
-			\item Introduction to \Snakemake Usage (in-depth will follow)
+			\item Introduction to \Snakemake Usage (in-depth introduction for users, only)
 			\item Get an Mini-Overview about Workflow Systems
 		\end{enumerate}
 	\end{docs}
@@ -48,11 +48,38 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
+	\frametitle{\Snakemake -- Bioinformatics to Physics}
+	Although developed first for Bioinformatics users, meanwhile used 
+	\begin{figure}[ht]
+		\begin{minipage}[b]{0.45\linewidth}
+			\centering
+			\vspace{-1em}
+			\includegraphics[width=\textwidth]{logos/bioinformatics.png}
+			\vspace{0.5em}
+			\caption*{bioformatics, incl. pharmaceutical research, structural biology, etc.}
+			\label{fig:a}
+		\end{minipage}
+		\hspace{0.5cm}
+		\begin{minipage}[b]{0.45\linewidth}
+			\centering
+			\vspace{-0.8em}
+			\includegraphics[width=\textwidth]{logos/physics.png}
+			\vspace{0.5em}
+			\caption*{experimental physics, fluid dynamics, high energy physics (CERN)}
+			\label{fig:b}
+		\end{minipage}
+	\end{figure}
+	%<a href="https://www.flaticon.com/free-icons/bioinformatics" title="bioinformatics icons">Bioinformatics icons created by Freepik - Flaticon</a>
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
 	\frametitle{The \Snakemake{} Catalogue}
 	\begin{columns}
 		\begin{column}{0.5\textwidth}
 			\begin{itemize}[<+->]
-				\item Extremely feature rich: \lhref{https://snakemake.github.io/snakemake-workflow-catalog/}{over 1800 workflows}
+				\item Extremely feature rich: \lhref{https://snakemake.github.io/snakemake-workflow-catalog/}{over 1800 workflows (mostly bioinformatics)}
 				\item Almost a hundred standardized workflows ready to use (meaning: well documented and with automatic deployment)
 				\item Cluster batch systems are supported (and support for various cloud systems, too)
 				\item There is an option to include Nextflow wrappers, too.
@@ -61,6 +88,7 @@
 		\begin{column}{0.5\textwidth}
 			\begin{figure}
 				\includegraphics[width=\textwidth]{Snakemake/Snakemake_Workflow_Catalog.png}
+				\vspace{0.5em}
 				\caption*{Screenshot of the Workflow Catalogue}
 			\end{figure}
 		\end{column}
@@ -75,18 +103,20 @@
 	\frametitle{How does \Snakemake on a Cluster work?}
 	\begin{columns}[T]
 		\begin{column}{.5\textwidth}
+			\only<3->{\includegraphics[width=0.95\textwidth]{misc/cluster_scheme.png}}
+		\end{column}
+		\begin{column}{.5\textwidth}
 			\begin{itemize}[<+->]
 				\item Snakemake is triggered on the command line:
 				\begin{lstlisting}[language=Bash, style=Shell]
 $ snakemake [<arguments>]
 				\end{lstlisting} 
-			    \item you will fill in the parameters of your workflow (in a file)
-			    \item Snakemake will run on the login-node and spawn your jobs on the cluster 
+			    \item users need to fill in the parameters of their workflow (e.\,g. input path(s) in a file)
+			    \item Snakemake will run on the login-node and spawn your jobs on the cluster using a
+			    \item cluster specific configuration file 
 			\end{itemize}
-			
-		\end{column}
-		\begin{column}{.5\textwidth}
-			\only<3>{\includegraphics[width=0.95\textwidth]{misc/cluster_scheme.png}}
+		    \pause
+			It is capable to remove temporary files and support various archiving systems.
 		\end{column}
 	\end{columns}
 \end{frame}
@@ -94,21 +124,16 @@ $ snakemake [<arguments>]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}<handout:0>
   \frametitle{"Spawn Jobs on a Cluster?!" - What does it mean?}
-  \centering
-  \begin{tabular}{m{0.1\textwidth} m{0.25\textwidth} m{0.2\textwidth} m{0.45\textwidth}}
-PC: & \includegraphics[width=0.1\textwidth]{misc/pc_color.png}  	    &  \includegraphics[width=0.2\textwidth]{misc/sequential_code.png} &  \begin{minipage}{0.45\textwidth}
-	$\Rightarrow$ sequential code \newline
-	(perhaps parallel)
-\end{minipage} \\ \pause
- 	
-Server: & \includegraphics[width=0.15\textwidth]{misc/homeserver.png}  	&  \includegraphics[width=0.2\textwidth]{misc/concurrent.pdf} & \begin{minipage}{0.45\textwidth}
-	$\Rightarrow$ sequential code \newline(perhaps parallel), \newline some concurrency
-	\end{minipage}\\ \pause
-  	
-Cluster: & \includegraphics[width=0.15\textwidth]{misc/data_center.png}  	&  \includegraphics[width=0.2\textwidth]{misc/high_concurrent.pdf} & \begin{minipage}{0.45\textwidth}
-	$\Rightarrow$ programs launched \newline with high parallelism, \newline high concurreny
-	\end{minipage}\\
-  \end{tabular}
+  \begin{hint}
+  	Here, we explain to users the difference between PC and Servers and HPC Systems. You will get the Admin background, only.
+  \end{hint}
+  \pause
+  \begin{itemize}[<+->]
+  	\item \Snakemake is triggered on a login-node, only.
+  	\item It will submit jobs \ldots
+  	\item \ldots and keeps running (without CPU load!) to monitor the job execution.
+  	\item depending on the workflow, it will download or plot with minor CPU load on the login node. (Hard to notice with a simple \verb*|top| command.)
+  \end{itemize}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

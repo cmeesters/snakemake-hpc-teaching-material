@@ -13,7 +13,8 @@ jobs:
       - name: Set up Git repository
         uses: actions/checkout@v4
       - name: Install Dependencies
-        run: sudo apt-get install -y python3-yaml 
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends 
+             python3-yaml 
              texlive 
              texlive-fonts-extra 
              texlive-latex-extra 
@@ -23,12 +24,14 @@ jobs:
              texlive-pstricks 
              texlive-science 
              latexmk
+             ghostscript
         
       - name: LaTeX compile  
         run: |
           ./render --master-tex Snakemake_HPC_Users.tex --configfile config/config_for_github.yaml ; 
-          ./render --master-tex Snakemake_HPC_Creators.tex --configfile config/config_for_github.yaml
-          ./render --master-tex Snakemake_HPC_User_Creator_Combi.tex --configfile config/config_for_github.yaml
+          ./render --master-tex Snakemake_HPC_Creators.tex --configfile config/config_for_github.yaml ;
+          ./render --master-tex Snakemake_HPC_User_Creator_Combi.tex --configfile config/config_for_github.yaml ;
+          ./render --master-tex Snakemake_HPC_Admins.tex --configfile config/config_for_github.yaml ;
 
       - name: Upload .pdf File
         uses: actions/upload-artifact@v4

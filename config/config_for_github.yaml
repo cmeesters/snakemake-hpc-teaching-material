@@ -23,6 +23,8 @@ layout:
 
 course:
   date: "datestring" # maybe: "\today"
+  #title: "" # specifiy your title here, else a default is used. 
+  #subtitle: "" # specifiy your subtitle here, else a default is used. 
   # Editors recommendations are a matter of taste and technological
   # setups (e.g. on-demand setups). Hence, specify an editor-slide,
   #  here:
