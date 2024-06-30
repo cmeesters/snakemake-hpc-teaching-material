@@ -51,9 +51,10 @@ def concatenate_pdfs():
     subprocess.call(items)
 
 def parse_participants(infile, only_name, name_index=2,
-                       surname_index=3):
+                       surname_index=3, has_header=False):
     people = list()
-    #infile.readline() # skip header
+    if has_header:
+        infile.readline() # skip header
     for line in infile:
         items = line.split(',')
         if only_name: 
@@ -72,6 +73,7 @@ if __name__ == '__main__':
     parser.add_argument('--textemplate', dest = 'templatefile', nargs = '?', type = str,
                         default = 'template_english.tex', help = "Specifies the tex template")
     parser.add_argument('--date', dest = 'date', help = 'Desired date')
+    parser.add_argument('--header', dest = 'has_header', help = 'Indicate presence of header line in participant export file', action='store_true')
     parser.add_argument('--sign-date', dest = 'sign_date', help = '')
     parser.add_argument('--select-name', dest = 'only_name', help = 'only generate for matching name')
     parser.add_argument('--name-index', dest = 'nindex', type=int,
@@ -83,7 +85,7 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    participants = parse_participants(args.exportfile, args.only_name, name_index = args.nindex, surname_index = args.sindex)
+    participants = parse_participants(args.exportfile, args.only_name, name_index = args.nindex, surname_index = args.sindex, has_header=args.has_header)
 
     data = yaml.safe_load(Path(args.configfile).read_text())
 

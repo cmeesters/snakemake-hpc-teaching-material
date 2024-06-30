@@ -1,0 +1,14 @@
+instructor:
+  name: "Dr. Strangelove"
+  role: "Computational Scientist - Some HPC Site"
+  organization: "Super Institution"
+  # optional
+  organization2: ""
+  address: "Woodland Str. 1"
+  city:    "Bearbrook"
+  url:     "superint.edu"
+course:
+  place: "Somewhere Else" # place of the course/signature
+  date: "1. and 2. January 1970"
+  sign_date: "2. January 1970"
+
